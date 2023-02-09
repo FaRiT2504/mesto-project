@@ -1,0 +1,10 @@
+.form__field_job {
+  margin: 6px 0 26px 0;
+}
+
+@media screen and (max-width: 320px) {
+  .form__field_job {
+    margin: 6px 0 37px 0;
+    line-height: 32px;
+  }
+}

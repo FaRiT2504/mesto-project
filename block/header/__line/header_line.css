@@ -1,0 +1,18 @@
+.header_line {
+  height: 1px;
+  max-width: 880.0000000000033px;
+  border: #545454;
+  border-radius: nullpx;
+  margin: 0;
+  padding: 0;
+  border-bottom: #545454;
+  opacity: .7;
+  background-color: #545454;
+
+}
+
+@media screen and (max-width: 320px) {
+  .header_line {
+    max-width: 320px;
+  }
+}
