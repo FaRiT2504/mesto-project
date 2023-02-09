@@ -6,7 +6,7 @@
   justify-self: end;
   grid-area: profile__button_add;
 
-  background-image: url('/../../../image/Add Button.svg');
+  background-image: url('../../../../image/Add Button.svg');
 }
 
 .profile__button_add:hover {
@@ -17,6 +17,6 @@
   .profile__button_add {
     max-width: 282px;
     justify-self: center;
-    background-image: url('/../../../image/Add Button(320).svg');
+    background-image: url('../../../../image/Add Button(320).svg');
   }
 }
