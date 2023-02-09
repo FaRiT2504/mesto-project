@@ -1,5 +1,5 @@
 .profile__job {
-  min-height: 18px;
+  /* min-height: 18px; */
   max-width: 336px;
   font-size: 18px;
   font-weight: 400;
@@ -16,7 +16,7 @@
 
 @media screen and (max-width: 580px) {
   .profile__job {
-    min-height: 14px;
+    /* min-height: 14px; */
     max-width: 282px;
     font-size: 14px;
     line-height: 17px;
