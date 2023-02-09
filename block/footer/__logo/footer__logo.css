@@ -8,7 +8,7 @@
   line-height: 22px;
   letter-spacing: 0em;
   text-align: left;
-  background-image: url('/../../../image/© 2020 Mesto Russia.svg');
+  background-image: url('../../../image/© 2020 Mesto Russia.svg');
 
 }
 
@@ -18,6 +18,6 @@
     max-width: 282px;
     font-size: 14px;
     line-height: 17px;
-    background-image: url('/../../../image/© 2020 Mesto Russia(320).svg');
+    background-image: url('../../../image/© 2020 Mesto Russia(320).svg');
   }
 }
