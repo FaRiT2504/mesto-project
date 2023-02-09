@@ -5,7 +5,7 @@
   right: -40px;
   width: 100%;
   top: -40px;
-  background-image: url('/image/Close Icon.svg');
+  background-image: url('/../../../image/Close Icon.svg');
 }
 
 .popup__close:hover {
@@ -20,7 +20,7 @@
     background: no-repeat;
     top: -39px;
     border-radius: 0px;
-    background-image: url('/image/Close Icon(320).svg');
+    background-image: url('/../../../image/Close Icon(320).svg');
   }
 
 }

@@ -5,8 +5,8 @@
   width: 100%;
   margin: 0;
   background: no-repeat;
-  background-image: url('/image/Group.svg');
-
+  background-image: url('/../../../image/Group.svg');
+  cursor: pointer;
 }
 
 .element__caption_icon:hover {
@@ -14,6 +14,6 @@
 }
 
 .element__caption_icon:active {
-  background-image: url('/image/Union.svg');
+  background-image: url('/../../../image/Union.svg');
   opacity: 1;
 }
