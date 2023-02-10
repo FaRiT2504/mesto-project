@@ -1,0 +1,24 @@
+.element__icon {
+  min-height: 19px;
+  max-width: 22px;
+  align-self: center;
+  width: 100%;
+  margin: 0;
+  background: no-repeat;
+  background-image: url('../../../image/Group.svg');
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.element__icon:hover {
+  opacity: .6;
+}
+
+.element__icon:active {
+  background-image: url('../../../image/Union.svg');
+  opacity: 1;
+}

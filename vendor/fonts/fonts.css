@@ -4,7 +4,6 @@
    font-style: normal;
    font-display: swap;
    src:
-     local('Inter'),
      url(../fonts/Inter/Inter-Regular.woff) format(woff),
      url(../fonts/Inter/Inter-Regular.woff2) format(woff2);
  }
@@ -15,7 +14,6 @@
    font-style: normal;
    font-display: swap;
    src:
-     local('Inter'),
      url(../fonts/Inter/Inter-Medium.woff) format(woff),
      url(../fonts/Inter/Inter-Medium.woff2) format(woff2);
  }
@@ -26,7 +24,6 @@
    font-style: normal;
    font-display: swap;
    src:
-     local('Inter'),
      url(../fonts/Inter/Inter-Black.woff) format(woff),
      url(../fonts/Inter/Inter-Black.woff2) format(woff2);
  }

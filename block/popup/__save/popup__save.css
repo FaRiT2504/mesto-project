@@ -1,4 +1,4 @@
-.popup__button_submit {
+.popup__save {
 
   min-height: 18px;
   max-width: 109px;
@@ -16,7 +16,7 @@
 }
 
 @media screen and (max-width: 530px) {
-  .popup__button_submit {
+  .popup__save {
     max-width: 74px;
     font-size: 14px;
     line-height: 44px;

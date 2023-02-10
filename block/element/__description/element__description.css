@@ -1,4 +1,4 @@
-.element__caption_place {
+.element__description {
   margin: 0;
   padding: 0;
   font-size: 24px;
@@ -7,4 +7,8 @@
   line-height: 29px;
   letter-spacing: 0em;
   text-align: left;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
