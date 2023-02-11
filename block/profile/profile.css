@@ -1,11 +1,10 @@
 .profile {
-  min-height: 211px;
   max-width: 880px;
   padding: 40px 0 51px 0;
   margin: 0 0 0 0;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: auto max-content 1fr 1fr;
+  grid-template-columns: 151px 3fr 1fr 3fr;
   width: 100%;
   height: 100%;
   grid-template-rows: 1fr;
@@ -15,7 +14,6 @@
 
 @media screen and (max-width: 580px) {
   .profile {
-    min-height: 286px;
     max-width: 282px;
     grid-template-columns: min-content auto;
     grid-template-columns: 13% 74% 13%;

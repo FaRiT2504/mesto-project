@@ -6,8 +6,6 @@
   justify-self: end;
   grid-area: profile__button_add;
   background-image: url('../../../../image/Add Button.svg');
-
-
 }
 
 .profile__button_type_add:hover {

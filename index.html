@@ -9,80 +9,78 @@
   </head>
   <body class="page">
     <header class="header">
-      <img class="header__logo" src="image/Vector.svg" alt="Надпись Mesto">
-      <div class="header__line"></div>
+      <div class="header__logo"></div>
     </header>
     <main class="content">
       <section class="profile">
         <div class="profile__avatar"></div>
         <div class="profile__info">
-          <h2 class="profile__name">Жак-Ив&nbsp;Кусто</h2> 
-          <p class="profile__job">Исследователь океана</p>
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <p class="profile__personal">Исследователь океана</p>
         </div>
-        <button class="profile__button  profile__button_type_edit" type="button"></button>  
+        <button class="profile__button  profile__button_type_edit" type="button"></button>
         <button class="profile__button  profile__button_type_add" type="button"></button>
       </section>
-      <div class="elements">
-        <div class="element">
-          <img class="element__mask" src="image/Element__Karachaevsk.jpg" alt="" >  
+      <section class="elements" aria-label="Форма куда можно добавлять свои карточки">
+        <article class="element">
+          <img class="element__mask" src="image/Element__Karachaevsk.jpg" alt="Замок среди гор.Фотография" >
           <div class="element__caption">
-            <p class="element__description">Карачаевск</p>
+            <h2 class="element__description">Карачаевск</h2>
             <button type="button" class="element__icon" ></button>
-          </div>          
-        </div>
-        <div class="element">
-          <img class="element__mask" src="image/Element__Mountain_Elbrus.jpg" alt="" >  
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__mask" src="image/Element__Mountain_Elbrus.jpg" alt="Гора Эльбрус на рассвете.Фотография" >
           <div class="element__caption">
-            <p class="element__description">Гора Эльбрус</p>
+            <h2 class="element__description">Гора Эльбрус</h2>
             <button type="button" class="element__icon" ></button>
-          </div>          
-        </div>
-        <div class="element">
-          <img class="element__mask" src="image/Element__Dombay.jpg" alt="" >  
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__mask" src="image/Element__Dombay.jpg" alt="Гора Домбай с заснеженными склонами.Фотография" >
           <div class="element__caption">
-            <p class="element__description">Домбай</p>
+            <h2 class="element__description">Домбай</h2>
             <button type="button" class="element__icon" ></button>
-          </div>          
-        </div>
-        <div class="element">
-          <img class="element__mask" src="image/Element__Mountain_Elbrus.jpg" alt="" >  
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__mask" src="image/Element__Mountain_Elbrus.jpg" alt="Гора Эльбрус на рассвете.Фотография" >
           <div class="element__caption">
-            <p class="element__description">Гора Эльбрус</p>
+            <h2 class="element__description">Гора Эльбрус</h2>
             <button type="button" class="element__icon" ></button>
-          </div>          
-        </div>
-        <div class="element">
-          <img class="element__mask" src="image/Element__Dombay.jpg" alt="" >  
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__mask" src="image/Element__Dombay.jpg" alt="Гора Домбай с заснеженными склонами.Фотография" >
           <div class="element__caption">
-            <p class="element__description">Домбай</p>
+            <h2 class="element__description">Домбай</h2>
             <button type="button" class="element__icon" ></button>
-          </div>          
-        </div>
-        <div class="element">
-          <img class="element__mask" src="image/Element__Karachaevsk.jpg" alt="" >  
+          </div>
+        </article>
+        <article class="element">
+          <img class="element__mask" src="image/Element__Karachaevsk.jpg" alt="Замок среди гор.Фотография" >
           <div class="element__caption">
-            <p class="element__description">Карачаево-Ч...</p>
+            <h2 class="element__description">Карачаево-Черкесия</h2>
             <button type="button" class="element__icon" ></button>
-          </div>          
-        </div>
-      </div>
+          </div>
+        </article>
+      </section>
     </main>
     <footer class="footer">
-        <div class="footer__logo"></div>     
+        <p class="footer__logo">&copy;2020 Mesto Russia</p>
     </footer>
-    <div id="popup"  class="popup popup_opened">           
+
+    <div id="popup"  class="popup popup_opened">
       <div class="popup__container">
-        <div class="popup__content">
+        <form class="popup__form" action="#" method="post" name="edit">
           <button type="button" class="popup__close-icon"></button>
-          <h2 class="popup__heading">Редактировать профиль</h2>         
-            <fieldset class="popup__form">       
-              <input class="popup__input  popup__input_type_name " type="text" id="name" name="name" placeholder="Жак-Ив Кусто" required>
-              <input class="popup__input  popup__input_type_job" type="text" id="job" name="job" placeholder="Исследователь океана" required>                     
-            </fieldset>         
-            <fieldset class="popup__button">
-              <button class="popup__save" type="submit">Сохранить</button>
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <fieldset class="popup__info">
+            <input class="popup__input  popup__input_type_name " type="text" id="name" name="name" placeholder="Имя" required>
+            <input class="popup__input  popup__input_type_personal" type="text" id="personal" name="personal" placeholder="О себе" required>
           </fieldset>
-        </div>
+          <button class="popup__save" type="submit">Сохранить</button>
+        </form>
       </div>
     </div>
   </body>

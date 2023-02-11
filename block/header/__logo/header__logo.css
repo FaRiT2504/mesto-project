@@ -1,15 +1,15 @@
 .header__logo {
-  max-height: 33px;
-  max-width: 142px;
-  padding: 0;
-  margin: 45px 0 41px 0;
-
+  min-height: 33px;
+  max-width: 880px;
+  background: no-repeat;
+  padding: 0 0 0 0;
+  margin: 0 auto 0 auto;
+  background-image: url('../../../image/Vector.svg');
+  background-size: contain;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 580px) {
   .header__logo {
     min-height: 24.396305084228516px;
-    max-width: 103.7361831665039px;
-    margin: 28px 0 31px 27px;
   }
 }
