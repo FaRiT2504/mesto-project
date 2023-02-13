@@ -20,8 +20,6 @@
 @import url('../block/popup/__close-icon/popup__close-icon.css');
 @import url('../block/popup/__heading/popup__heading.css');
 @import url('../block/popup/__info/popup__info.css');
-@import url('../block/popup/__input/_type/popup__input_type_personal.css');
-@import url('../block/popup/__input/_type/popup__input_type_name.css');
 @import url('../block/popup/__save/popup__save.css');
 @import url('../block/profile/__avatar/profile__avatar.css');
 @import url('../block/profile/__button/_type/profile__button_type_add.css');

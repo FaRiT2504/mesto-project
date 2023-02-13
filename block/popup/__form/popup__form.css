@@ -8,7 +8,6 @@
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  margin: 70px 0 120px 0;
   padding: 34px 36px 37px 36px;
   position: relative;
 }
@@ -16,7 +15,6 @@
 @media screen and (max-width: 530px) {
   .popup__form {
     max-width: 282px;
-    margin: 92px 0 105px 0;
     padding: 25px 22px 25px 22px;
   }
 }

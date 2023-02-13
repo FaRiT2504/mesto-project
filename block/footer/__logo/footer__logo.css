@@ -1,5 +1,4 @@
 .footer__logo {
-  min-height: 18px;
   max-width: 880px;
   background: no-repeat;
   margin: 0 auto 0 auto;
@@ -15,10 +14,8 @@
 
 @media screen and (max-width: 320px) {
   .footer__logo {
-    min-height: 14px;
     max-width: 282px;
     font-size: 14px;
     line-height: 17px;
-
   }
 }
