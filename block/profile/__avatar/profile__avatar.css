@@ -9,7 +9,7 @@
   grid-area: profile__avatar;
 }
 
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 680px) {
   .profile__avatar {
     justify-self: center;
 

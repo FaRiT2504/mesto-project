@@ -15,12 +15,12 @@
 }
 
 
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 680px) {
   .profile__personal {
     max-width: 282px;
     font-size: 14px;
     line-height: 17px;
     margin: 0px 0px 8px 0px;
-    text-align: center;
+    align-self: center;
   }
 }

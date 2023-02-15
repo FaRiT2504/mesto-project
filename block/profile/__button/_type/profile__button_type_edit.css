@@ -7,13 +7,26 @@
   background: no-repeat;
   background-image: url('../../../../image/Edit Button.svg');
   margin: 0 0 20px 0;
+
 }
 
 .profile__button_type_edit:hover {
   opacity: .6;
 }
 
-@media screen and (max-width: 580px) {
+/* @media screen and (max-width: 920px) {
+  .profile__button_type_edit {
+    margin: 0 0 20px 18px;
+  }
+} */
+@media screen and (max-width: 800px) {
+  .profile__button_type_edit {
+    margin: 0 0 36px 0;
+
+  }
+}
+
+@media screen and (max-width: 680px) {
   .profile__button_type_edit {
     min-height: 18px;
     max-width: 18px;

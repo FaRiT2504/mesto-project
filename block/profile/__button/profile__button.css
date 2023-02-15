@@ -5,5 +5,12 @@
   font: inherit;
   color: inherit;
   background-color: transparent;
-
+  background-size: contain;
+  background-repeat: no-repeat;
 }
+
+/* @media screen and (max-width: 920px) {
+  .profile__button {
+    margin: 0 0 20px 18px;
+  }
+} */

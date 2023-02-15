@@ -12,7 +12,7 @@
     "profile__avatar profile__info  profile__button_edit profile__button_add";
 }
 
-@media screen and (max-width: 580px) {
+@media screen and (max-width: 680px) {
   .profile {
     max-width: 282px;
     grid-template-columns: min-content auto;
