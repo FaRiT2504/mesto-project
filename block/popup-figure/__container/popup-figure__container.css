@@ -1,16 +1,15 @@
-.popup__container {
+.popup-figure__container {
   display: flex;
   justify-content: center;
   align-self: center;
-  max-width: 430px;
+  min-height: 75vh;
+  max-width: 75vw;
   width: 100%;
-  margin: auto;
   flex-direction: column;
+  margin: auto;
   position: relative;
 }
 
 @media screen and (max-width: 530px) {
-  .popup__container {
-    max-width: 282px;
-  }
+  .popup-figure__container {}
 }

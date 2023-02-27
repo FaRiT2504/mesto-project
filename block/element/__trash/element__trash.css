@@ -1,19 +1,21 @@
-.element__icon {
+.element__trash {
   min-height: 19px;
-  max-width: 22px;
-  align-self: center;
+  max-width: 18px;
+  top: 20px;
+  right: 20px;
   width: 100%;
   margin: 0;
   background: no-repeat;
-  background-image: url('../../../image/Group.svg');
+  background-image: url('../../../image/Trash.svg');
   padding: 0;
   border: none;
   font: inherit;
   color: inherit;
   background-color: transparent;
   cursor: pointer;
+  position: absolute;
 }
 
-.element__icon:hover {
+.element__trash:hover {
   opacity: .5;
 }

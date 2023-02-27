@@ -3,6 +3,8 @@
   background-color: #FFFFFF;
   max-width: 282px;
   border-radius: 10px;
+  width: 100%;
+  position: relative;
 
 }
 

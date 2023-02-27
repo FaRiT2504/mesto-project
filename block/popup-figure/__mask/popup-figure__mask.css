@@ -1,0 +1,13 @@
+.popup-figure__mask {
+  /* display: flex;
+  width: 100%; */
+  /* align-self: center; */
+  background: no-repeat;
+  background-position: center;
+  background-size: contain;
+  /* background: round; */
+  width: 100%;
+  min-height: 75vh;
+  max-width: 75vw;
+
+}
