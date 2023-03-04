@@ -1,4 +1,4 @@
-.elements {
+.cards {
   max-width: 880px;
   justify-items: center;
   display: grid;
@@ -9,7 +9,7 @@
 }
 
 @media screen and (max-width: 320px) {
-  .elements {
+  .cards {
     max-width: 282px;
   }
 }

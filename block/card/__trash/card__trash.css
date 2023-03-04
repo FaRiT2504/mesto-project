@@ -1,4 +1,4 @@
-.element__trash {
+.card__trash {
   min-height: 19px;
   max-width: 18px;
   top: 20px;
@@ -16,6 +16,6 @@
   position: absolute;
 }
 
-.element__trash:hover {
+.card__trash:hover {
   opacity: .5;
 }

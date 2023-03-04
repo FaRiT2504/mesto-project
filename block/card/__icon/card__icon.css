@@ -1,4 +1,4 @@
-.element__icon {
+.card__icon {
   min-height: 19px;
   max-width: 22px;
   align-self: center;
@@ -14,6 +14,6 @@
   cursor: pointer;
 }
 
-.element__icon:hover {
+.card__icon:hover {
   opacity: .5;
 }
