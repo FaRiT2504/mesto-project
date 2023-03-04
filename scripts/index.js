@@ -26,7 +26,11 @@ const popupJob = document.querySelector('.popup__input_type_job');
 //нахожу секцию куда буду добавлять свои карточки
 const cards = document.querySelector('.cards');
 //находим все крестики в проекте по универсальному селектору
-const closeButton = document.querySelectorAll('.popup__close')
+const closeButtons = document.querySelectorAll('.popup__close')
+//нахожу div для вставки картинки в попап с всплывающей картинкой
+const popupPictureImg = document.querySelector('.popup-picture__img');
+//нахожу div для вставки описания к картинке в попапе с всплывающей картинкой
+const popupPictureCaption = document.querySelector('.popup-picture__caption');
 //массив готовых карточек
 const initialCards = [
   {
@@ -57,15 +61,18 @@ const initialCards = [
 
 //функция открытия попапа
 function openPopup(popup) {
-  //присваиваем значениям формы «Имя» и «О себе» значения
-  //которые отображаются на странице
-  popupName.value = profileName.textContent;
-  popupJob.value = profileJob.textContent;
   //открываю попап
   popup.classList.add('popup_opened');
 };
 //вешаем событие на кнопку редактировать(открытие popup)
-profileButton.addEventListener('click', () => openPopup(popupProfile));
+profileButton.addEventListener('click', () => {
+  //присваиваем значениям формы «Имя» и «О себе» значения
+  //которые отображаются на странице
+  popupName.value = profileName.textContent;
+  popupJob.value = profileJob.textContent;
+  //вызываю функцию открытия попапа
+  openPopup(popupProfile)
+});
 //вешаем событие на кнопку добавить новое место(открытие popup)
 cardButton.addEventListener('click', () => openPopup(popupCard));
 
@@ -74,8 +81,8 @@ function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-//перебираем closeButton, находим крестик и вешаем событие
-closeButton.forEach((button) => {
+//перебираем closeButtons, находим крестик и вешаем событие
+closeButtons.forEach((button) => {
   //находим 1 раз ближайший к крестику попап
   const popup = button.closest('.popup')
   //устанавливаем отбработчик закрытия на крестик
@@ -131,10 +138,10 @@ function createCard(titleValue, linkValue) {
   });
   //вешаем событие на  картинку(открытие popup)
   cardPicture.addEventListener('click', function () {
-    //нахожу div для вставки картинки модального окна с всплывающей картинкой
-    document.querySelector('.popup-picture__img').style.backgroundImage = `url(${String(linkValue)})`;
-    //вставляю описание к картинке в модальноое окно с всплывающей картинкой
-    document.querySelector('.popup-picture__caption').textContent = String(titleValue);
+    //вставляю картинку в попап с всплывающей картинкой
+    popupPictureImg.style.backgroundImage = `url(${String(linkValue)})`;
+    //вставляю описание к картинке в попап с всплывающей картинкой
+    popupPictureCaption.textContent = String(titleValue);
     openPopup(popupPicture)
   });
   // вешаю событие на корзину
@@ -153,7 +160,5 @@ function addcard(titleValue, linkValue) {
   //добавляю новую карточку в DOM
   cards.prepend(element);
 }
-
-
 
 
