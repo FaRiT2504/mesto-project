@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="pages/index.css">
+    <link rel="stylesheet" href="indexBorder.css">
     <title>Mesto</title>
   </head>
 
@@ -31,7 +32,7 @@
         <template id="element-template">
           <article class="element">
             <button type="button" class="element__trash"></button>
-            <div class="element__mask"></div>
+            <div class="element__img"></div>
             <div class="element__caption">
               <h2 class="element__description"></h2>
               <button type="button" class="element__icon" ></button>
@@ -48,8 +49,8 @@
 
     <div id="popup-edit"  class="popup">
       <div class="popup__container">
-        <button type="button" class="popup__close-icon"></button>
-        <form class="popup__form" action="#" method="post" name="edit">
+        <button type="button" class="popup__close"></button>
+        <form class="popup__form" action="#" method="post" name="profile-form">
           <h2 class="popup__heading">Редактировать профиль</h2>
           <fieldset class="popup__info">
             <input class="popup__input  popup__input_type_name " type="text" id="name" name="name" placeholder="Имя" required>
@@ -62,8 +63,8 @@
 
     <div id="popup-add"  class="popup">
       <div class="popup__container">
-        <button type="button" class="popup__close-icon"></button>
-        <form class="popup__form" action="#" method="post" name="edit">
+        <button type="button" class="popup__close"></button>
+        <form class="popup__form" action="#" method="post" name="card-form">
           <h2 class="popup__heading">Новое место</h2>
           <fieldset class="popup__info">
             <input class="popup__input  popup__input_type_title" type="text" id="title" name="title" placeholder="Название" required>
@@ -74,11 +75,11 @@
       </div>
     </div>
 
-    <div id="popup-figure"  class="popup">
-      <figure class="popup-figure__container">
-        <button type="button" class="popup__close-icon"></button>
-        <div class="popup-figure__mask"></div>
-        <figcaption class="popup-figure__caption">уыцпцупцупцупц</figcaption>
+    <div id="popup-picture"  class="popup">
+      <figure class="popup-picture__container">
+        <button type="button" class="popup__close"></button>
+        <div class="popup-picture__img"></div>
+        <figcaption class="popup-picture__caption">уыцпцупцупцупц</figcaption>
         </figure>
     </div>
 

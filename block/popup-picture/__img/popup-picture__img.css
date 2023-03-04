@@ -1,7 +1,5 @@
-.popup-figure__mask {
-  /* display: flex;
-  width: 100%; */
-  /* align-self: center; */
+.popup-picture__img {
+
   background: no-repeat;
   background-position: center;
   background-size: contain;

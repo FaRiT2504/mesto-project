@@ -1,4 +1,4 @@
-.popup-figure__container {
+.popup-picture__container {
   display: flex;
   justify-content: center;
   align-self: center;
@@ -11,5 +11,5 @@
 }
 
 @media screen and (max-width: 530px) {
-  .popup-figure__container {}
+  .popup-picture__container {}
 }
