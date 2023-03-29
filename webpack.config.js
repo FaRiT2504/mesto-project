@@ -2,6 +2,7 @@
 const path = require('path'); // подключаем path к конфигу вебпак
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // подключите плагин
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // подключили плагин
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
   entry: { main: './src/index.js' },
   output: {
@@ -33,6 +34,15 @@ module.exports = {
         test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
         type: 'asset/resource'
       },
+      {
+        // применять это правило только к CSS-файлам
+        test: /\.css$/,
+        // при обработке этих файлов нужно использовать
+        // MiniCssExtractPlugin.loader и css-loader
+        use: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader'
+        }]
+      }
     ]
   },
   plugins: [
@@ -40,6 +50,7 @@ module.exports = {
       template: './src/index.html'
     }),
     new CleanWebpackPlugin(), // использовали плагин
+    new MiniCssExtractPlugin() // подключение плагина для объединения файлов
   ]
 }
 
