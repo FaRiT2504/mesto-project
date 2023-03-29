@@ -1,7 +1,7 @@
 import { object, enableValidation } from "./components/validate.js"
 import { popupCard, popupProfile, popupName, profileName, popupJob, profileJob } from "./components/modal.js"
 import { openPopup, closePopup } from "./components/utils.js"
-
+import './pages/index.css'
 // Нахожу кнопку редактировать в DOM
 const profileButton = document.querySelector('.profile__button_type_edit');
 // Нахожу кнопку добавить новое место в DOM
