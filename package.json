@@ -1,0 +1,24 @@
+{
+  "name": "yandex_praktikum",
+  "version": "0.0.1",
+  "description": "##Описание проекта## Сайт Адаптирован под разные устройства. Данный проект представляет собой одностраничный сайт куда можно добавить свои профиль и фотографии интересных мест",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "author": "Farit Zarifullin",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.3",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.76.3",
+    "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "core-js": "^3.29.1"
+  }
+}
