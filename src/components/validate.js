@@ -1,10 +1,10 @@
 const object = {
   formSelector: '.popup__form',
-  inputSelector: '.popup__input',
+  inputSelector: 'popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
-  errorClass: '.popup__error_visible',
+  errorClass: 'popup__error_visible',
 }
 
 //функция, которая добавляет класс с ошибкой. Получает параметром форму, в которой

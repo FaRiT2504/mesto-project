@@ -1,4 +1,5 @@
 import { addcard } from "./card.js"
+import { closePopup } from "./utils.js"
 // находим формы в проекте
 const profileForm = document.forms['profile-form'];
 const cardForm = document.forms['card-form'];
