@@ -1,6 +1,6 @@
 const object = {
   formSelector: '.popup__form',
-  inputSelector: 'popup__input',
+  inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
@@ -12,6 +12,7 @@ const object = {
 const showInputError = (formElement, inputElement, errorMessage) => {
   // выбираю текст ошибки на основе уникального класса
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+
   inputElement.classList.add(object.inputErrorClass);
   errorElement.textContent = errorMessage;
   //показываю сообщение об ошибке
@@ -32,9 +33,7 @@ const hideInputError = (formElement, inputElement) => {
 const checkInputValidity = (formElement, inputElement) => {
 
   if (inputElement.validity.patternMismatch) {
-    // данные атрибута доступны у элемента инпута через ключевое слово dataset.
-    // обратите внимание, что в js имя атрибута пишется в camelCase (да-да, в
-    // HTML мы писали в kebab-case, это не опечатка)
+
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   }
   else {
@@ -53,7 +52,7 @@ const setEventListeners = (formElement) => {
   const buttonElement = formElement.querySelector(object.submitButtonSelector)
   buttonElement.setAttribute('disabled', true)
   toggleButtonState(inputList, buttonElement)
-  inputList.forEach((inputElement) => {
+  inputList.forEach(function (inputElement) {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
       toggleButtonState(inputList, buttonElement)
@@ -63,7 +62,7 @@ const setEventListeners = (formElement) => {
 
 function enableValidation({ }) {
   const formList = Array.from(document.querySelectorAll(object.formSelector));
-  formList.forEach((formElement) => {
+  formList.forEach(function (formElement) {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });

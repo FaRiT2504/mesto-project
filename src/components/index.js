@@ -24,11 +24,9 @@ profileButton.addEventListener('click', () => {
 //перебираю все попапы и вешаю события на оверлей и на esc
 popups.forEach((popup) => {
   //вешаю событие при клике на оверлей
-  popup.addEventListener('click', (evt) => closePopup(evt.target))
-  ////вешаю событие при клике на Escape
-  popup.addEventListener('keydown', function (evt) {
-    if (evt.key === 'Escape') {
-      closePopup(evt.target)
+  popup.addEventListener('click', function (evt) {
+    if (evt.target === popup) {
+      closePopup(popup)
     }
   })
 })
