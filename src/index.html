@@ -22,6 +22,8 @@
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <p class="profile__job">Исследователь океана</p>
+          <!-- <h1 class="profile__name"></h1>
+          <p class="profile__job"></p> -->
         </div>
         <button class="profile__button  profile__button_type_edit" type="button"></button>
         <button class="profile__button  profile__button_type_add" type="button"></button>
@@ -62,7 +64,7 @@
             required
             pattern="^[а-яА-Яa-zA-Z]+$"
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
-            <span class="name-input-error form__input-error"></span>
+            <span class="name-input-error popup__input-error"></span>
             <input class="popup__input  popup__input_type_job"
             type="text"
             id="job-input"
@@ -71,7 +73,7 @@
             minlength="2"
             maxlength="200"
             required>
-            <span class="job-input-error form__input-error"></span>
+            <span class="job-input-error popup__input-error"></span>
           </fieldset>
           <button class="popup__button" type="submit">Сохранить</button>
         </form>
@@ -94,14 +96,14 @@
             required
             pattern="^[а-яА-Яa-zA-Z]+$"
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы">
-            <span class="title-input-error form__input-error"></span>
+            <span class="title-input-error popup__input-error"></span>
             <input class="popup__input  popup__input_type_link"
             type="url"
             id="url-input"
             name="url"
             placeholder="Ссылка на картинку"
             required>
-            <span class="url-input-error form__input-error"></span>
+            <span class="url-input-error popup__input-error"></span>
           </fieldset>
           <button class="popup__button" type="submit">Создать</button>
         </form>

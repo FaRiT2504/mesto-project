@@ -1,6 +1,7 @@
-import { object, enableValidation } from "./validate.js"
-import { popupCard, popupProfile, popupName, profileName, popupJob, profileJob } from "./modal.js"
+import { object, enableValidation, disableButton } from "./validate.js"
+import { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, profileAvatar } from "./modal.js"
 import { openPopup, closePopup } from "./utils.js"
+// import { getProfileInfo } from "./api.js"
 import './../pages/index.css'
 // Нахожу кнопку редактировать в DOM
 const profileButton = document.querySelector('.profile__button_type_edit');
@@ -8,8 +9,9 @@ const profileButton = document.querySelector('.profile__button_type_edit');
 const cardButton = document.querySelector('.profile__button_type_add');
 //нахожу все попапы в DOM
 const popups = document.querySelectorAll('.popup');
-//находим все крестики в проекте по универсальному селектору
-const closeButtons = document.querySelectorAll('.popup__close')
+
+// //находим все крестики в проекте по универсальному селектору
+// const closeButtons = document.querySelectorAll('.popup__close')
 
 //вешаем событие на кнопку редактировать(открытие popup)
 profileButton.addEventListener('click', () => {
@@ -21,28 +23,33 @@ profileButton.addEventListener('click', () => {
   openPopup(popupProfile)
 });
 
-//перебираю все попапы и вешаю события на оверлей и на esc
+//вешаю событие на крестик и на оверлей
 popups.forEach((popup) => {
-  //вешаю событие при клике на оверлей
-  popup.addEventListener('click', function (evt) {
-    if (evt.target === popup) {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_opened')) {
+      closePopup(popup)
+    }
+    if (evt.target.classList.contains('popup__close')) {
       closePopup(popup)
     }
   })
 })
 
-//перебираем closeButtons, находим крестик и вешаем событие
-closeButtons.forEach((button) => {
-  //находим 1 раз ближайший к крестику попап
-  const popup = button.closest('.popup')
-  //устанавливаем отбработчик закрытия на крестик
-  button.addEventListener('click', () => closePopup(popup))
-});
-
 //вешаем событие на кнопку добавить новое место(открытие popup)
 cardButton.addEventListener('click', () => openPopup(popupCard));
+
 //функция валидации
 enableValidation(object);
+
+// //функция обновляет информацию о пользователе с сервера
+// const updateProfileInfo = (object) => {
+//   profileName.textContent = object.name;
+//   profileJob.textContent = object.about;
+//   profileAvatar.style.backgroundImage = `url(${object.avatar})`;
+// };
+// updateProfileInfo(getProfileInfo);
+
+
 
 
 

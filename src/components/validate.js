@@ -47,15 +47,15 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
-const setEventListeners = (formElement) => {
+const setEventListeners = (formElement, object) => {
   const inputList = Array.from(formElement.querySelectorAll(object.inputSelector));
   const buttonElement = formElement.querySelector(object.submitButtonSelector)
-  buttonElement.setAttribute('disabled', true)
-  toggleButtonState(inputList, buttonElement)
+  // buttonElement.setAttribute('disabled', true)
+  toggleButtonState(inputList, buttonElement, object)
   inputList.forEach(function (inputElement) {
     inputElement.addEventListener('input', function () {
       checkInputValidity(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement)
+      toggleButtonState(inputList, buttonElement, object)
     });
   });
 };
@@ -66,7 +66,7 @@ function enableValidation({ }) {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
-    setEventListeners(formElement);
+    setEventListeners(formElement, object);
   });
 };
 
@@ -76,16 +76,23 @@ function hasInvalidInput(inputList) {
     return !inputElement.validity.valid;
   })
 }
-
+// функция деактивировации кнопки сабмита
+function disableButton(buttonElement, object) {
+  buttonElement.classList.add(object.inactiveButtonClass);
+  buttonElement.setAttribute('disabled', true)
+}
+// функция активировации кнопки сабмита
+function activeButton(buttonElement, object) {
+  buttonElement.classList.remove(object.inactiveButtonClass);
+  buttonElement.removeAttribute('disabled')
+}
 //функция отключает и включает кнопку
-function toggleButtonState(inputList, buttonElement) {
+function toggleButtonState(inputList, buttonElement, object) {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(object.inactiveButtonClass);
-    buttonElement.setAttribute('disabled', true)
+    disableButton(buttonElement, object);
   } else {
-    buttonElement.classList.remove(object.inactiveButtonClass);
-    buttonElement.removeAttribute('disabled')
+    activeButton(buttonElement, object);
   }
 }
 
-export { object, showInputError, hideInputError, checkInputValidity, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState }
+export { object, showInputError, hideInputError, checkInputValidity, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState, disableButton }

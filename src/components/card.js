@@ -1,24 +1,5 @@
 import { openPopup } from "./utils.js"
-// import arkhyzImage from 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-// import chelyabinskOblastImage from 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-// import ivanovoImage from 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-// import kamchatkaImage from 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-// import kholmogorskyRayonImage from 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-// import baikalImage from 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-
-
-// const arkhyzImage = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg', import.meta.url);
-
-// const chelyabinskOblastImage = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg', import.meta.url);
-
-// const ivanovoImage = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg', import.meta.url);
-
-// const kamchatkaImage = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg', import.meta.url);
-
-// const kholmogorskyRayonImage = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg', import.meta.url);
-
-// const baikalImage = new URL('https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg', import.meta.url);
-
+import { getInitialCards } from "./api.js"
 //нахожу секцию куда буду добавлять свои карточки
 const cards = document.querySelector('.cards');
 //нахожу div для вставки картинки в попап с всплывающей картинкой
@@ -56,9 +37,14 @@ const initialCards = [
   }
 ];
 
+//добавляю в template шесть карточек из сервера
+// getInitialCards()
+//   .then((res) => {
+//     res.forEach((item) => addcard(item.name, item.link))
+//   })
+
 //добавляю в template шесть карточек из массива initialCards
 initialCards.forEach((item) => addcard(item.name, item.link))
-
 //функция создания карточек
 function createCard(titleValue, linkValue) {
   //получаю содержимое тега template

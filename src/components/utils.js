@@ -1,6 +1,7 @@
 
 //функция открытия попапа
 function openPopup(popup) {
+
   //открываю попап
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEsc);

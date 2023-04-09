@@ -1,5 +1,7 @@
 import { addcard } from "./card.js"
 import { closePopup } from "./utils.js"
+import { enableValidation, object } from "./validate.js"
+import { setProfileInfo } from "./api.js"
 // находим формы в проекте
 const profileForm = document.forms['profile-form'];
 const cardForm = document.forms['card-form'];
@@ -17,9 +19,10 @@ const popupJob = document.querySelector('.popup__input_type_job');
 const profileName = document.querySelector('.profile__name');
 // Нахожу поле "О себе" на странице
 const profileJob = document.querySelector('.profile__job');
+//нахожу картинку пользователя
+const profileAvatar = document.querySelector('.profile__avatar');
 // Нахожу модальное окно "редактировать" в DOM
 const popupProfile = document.querySelector('#popup-edit');
-
 //функция обработчик «отправки» формы для карточек
 function handlerCardFormSubmit(evt) {
   // Эта строчка отменяет стандартную отправку формы.
@@ -28,6 +31,8 @@ function handlerCardFormSubmit(evt) {
   addcard(popupCardTitle.value, popupCardLink.value);
   //ощищаю импуты
   cardForm.reset();
+  //деактивирую кнопку сабмита
+  enableValidation(object);
   //закрываю попап
   closePopup(popupCard);
 }
@@ -37,8 +42,9 @@ function handlerProfileFormSubmit(evt) {
   // Эта строчка отменяет стандартную отправку формы.
   evt.preventDefault();
   //отображаем на странице то что сохранилось в форме «Имя» и «О себе»
-  profileName.textContent = popupName.value;
-  profileJob.textContent = popupJob.value;
+  setProfileInfo({ name: popupName.value, about: popupJob.value })
+  // profileName.textContent = popupName.value;
+  // profileJob.textContent = popupJob.value;
   //закрываем попап
   closePopup(popupProfile);
 }
@@ -47,5 +53,21 @@ function handlerProfileFormSubmit(evt) {
 profileForm.addEventListener('submit', handlerProfileFormSubmit);
 cardForm.addEventListener('submit', handlerCardFormSubmit);
 
-export { popupCard, popupProfile, popupName, profileName, popupJob, profileJob }
+export { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, profileAvatar }
 
+
+
+// setUserInfo({
+//   name: nameInput.value,
+//   about: jobInput.value
+// })
+
+// .then((info) =>{
+//   updateUserInfo(info);
+//   closePopup(profilePopup);
+// })
+// .catch((err) => console.log(`Ошибка при обновлении данных пользователя: ${err}`)
+// )
+// .finally(() => {
+//   renderLoading(profilePopup);
+// })
