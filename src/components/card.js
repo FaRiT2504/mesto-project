@@ -1,5 +1,5 @@
 import { openPopup } from "./utils.js"
-import { getInitialCards } from "./api.js"
+// import { getInitialCards } from "./api.js"
 //нахожу секцию куда буду добавлять свои карточки
 const cards = document.querySelector('.cards');
 //нахожу div для вставки картинки в попап с всплывающей картинкой
@@ -37,7 +37,7 @@ const initialCards = [
   }
 ];
 
-//добавляю в template шесть карточек из сервера
+// //добавляю в template шесть карточек c сервера
 // getInitialCards()
 //   .then((res) => {
 //     res.forEach((item) => addcard(item.name, item.link))

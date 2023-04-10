@@ -1,7 +1,7 @@
 import { addcard } from "./card.js"
 import { closePopup } from "./utils.js"
 import { enableValidation, object } from "./validate.js"
-import { setProfileInfo } from "./api.js"
+// import { setProfileInfo } from "./api.js"
 // находим формы в проекте
 const profileForm = document.forms['profile-form'];
 const cardForm = document.forms['card-form'];
@@ -31,8 +31,6 @@ function handlerCardFormSubmit(evt) {
   addcard(popupCardTitle.value, popupCardLink.value);
   //ощищаю импуты
   cardForm.reset();
-  //деактивирую кнопку сабмита
-  enableValidation(object);
   //закрываю попап
   closePopup(popupCard);
 }
@@ -42,9 +40,9 @@ function handlerProfileFormSubmit(evt) {
   // Эта строчка отменяет стандартную отправку формы.
   evt.preventDefault();
   //отображаем на странице то что сохранилось в форме «Имя» и «О себе»
-  setProfileInfo({ name: popupName.value, about: popupJob.value })
-  // profileName.textContent = popupName.value;
-  // profileJob.textContent = popupJob.value;
+  // setProfileInfo({ name: popupName.value, about: popupJob.value })
+  profileName.textContent = popupName.value;
+  profileJob.textContent = popupJob.value;
   //закрываем попап
   closePopup(popupProfile);
 }
