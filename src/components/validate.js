@@ -51,6 +51,7 @@ const setEventListeners = (formElement, object) => {
   const inputList = Array.from(formElement.querySelectorAll(object.inputSelector));
   const buttonElement = formElement.querySelector(object.submitButtonSelector)
   // buttonElement.setAttribute('disabled', true)
+  // деактивируем кнопку при 1й загрузке сайта
   toggleButtonState(inputList, buttonElement, object)
   formElement.addEventListener('reset', () => {
     disableButton(buttonElement, object)

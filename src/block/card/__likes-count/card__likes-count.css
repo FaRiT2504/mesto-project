@@ -1,0 +1,10 @@
+.card__likes-count {
+  align-self: center;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+
+}

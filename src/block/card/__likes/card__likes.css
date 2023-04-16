@@ -1,0 +1,15 @@
+.card__likes {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 19px;
+  max-width: 22px;
+  align-self: center;
+  width: 100%;
+  /* margin: 0;
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit; */
+
+}

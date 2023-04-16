@@ -3,15 +3,34 @@
   width: 120px;
   border-radius: 0px;
   border-radius: 50%;
-  background-image: url('../../../image/avatar__image.jpg');
+  /* background-image: url('../../../image/avatar__image.jpg'); */
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   grid-area: profile__avatar;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.profile__avatar::before {
+  content: '';
+  position: absolute;
+  height: 26px;
+  width: 26px;
+}
+
+.profile__avatar:hover::before {
+  content: '';
+  background-image: url('../../../image/pen.svg');
+}
+
+.profile__avatar:hover {
+  opacity: .6;
 }
 
 @media screen and (max-width: 680px) {
   .profile__avatar {
     justify-self: center;
-
   }
 }

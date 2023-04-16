@@ -40,3 +40,6 @@
 @import url('../block/profile/__name/profile__name.css');
 @import url('../block/profile/profile.css');
 @import url('../block/popup/__popup__input-error/popup__input-error.css');
+@import url('../block/profile/__pen/profile__pen.css');
+@import url('../block/card/__likes/card__likes.css');
+@import url('../block/card/__likes-count/card__likes-count.css');
