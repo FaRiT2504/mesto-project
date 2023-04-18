@@ -50,7 +50,10 @@ enableValidation(object);
 //обновляю информацию о пользователе с сервера
 getProfileInfo().then(function (res) {
   updateProfileInfo(res)
-});
+})
+  .catch((err) => {
+    console.log(err); // выводим ошибку в консоль
+  });
 
 // (async function main() {
 //   let temp = await getProfileInfo().then(function (res) {

@@ -9,8 +9,8 @@ const popupPictureImg = document.querySelector('.popup-picture__img');
 const popupPictureCaption = document.querySelector('.popup-picture__caption');
 //нахожу модальное окно с всплывающей картинкой в DOM
 const popupPicture = document.querySelector('#popup-picture');
-
-
+//нахожу кнопку удаления карточки .popup__button_delete
+const popupButtonDelete = document.querySelector('.popup__button_delete');
 // //массив готовых карточек
 // const initialCards = [
 //   {
@@ -47,6 +47,10 @@ getInitialCards()
   .then((res) => {
     res.forEach((item) => addСard(item.name, item.link, item))
   })
+  .catch((err) => {
+    console.log(err); // выводим ошибку в консоль
+  });
+
 
 
 //функция создания карточек
@@ -69,19 +73,21 @@ function createCard(titleValue, linkValue, data) {
   cardPicture.style.backgroundImage = `url(${String(linkValue)})`;
   //вешаю событие на кнопку лайка
   card.querySelector('.card__icon').addEventListener('click', function (evt) {
-    //проверяю есть класс card__icon_active в элементе
+    //проверяю есть ли класс card__icon_active в элементе
     if (evt.target.classList.contains('card__icon_active')) {
-      //если есть то закраштваю сердечко
-      evt.target.classList.remove('card__icon_active');
-      //и прибавляю  лайк
+      //если есть удаляю  лайк
       deleteLike(data._id).then((res) => {
         cardLikesCount.textContent = res.likes.length
+        //и стираю сердечко
+        evt.target.classList.remove('card__icon_active');
       })
     } else {
-      //если класса card__icon_active
-      evt.target.classList.add('card__icon_active');
+      //если класса card__icon_active нет в элементе
+      //ставлю лайк
       setLike(data._id).then((res) => {
         cardLikesCount.textContent = res.likes.length
+        //и закрашиваю сердечко
+        evt.target.classList.add('card__icon_active');
       })
     }
 
@@ -97,22 +103,28 @@ function createCard(titleValue, linkValue, data) {
     openPopup(popupPicture)
   });
 
-  getProfileInfo().then((res) => {
-    //если карточка моя
-    if (res._id === data.owner._id) {
-      // вешаю событие на корзину
-      cardTrash.addEventListener('click', function () {
-        openPopup(popupDelete)
-        //запиcываю id карточки в id попапа формы удаления
-        popupDelete.querySelector('.popup__form').id = data._id
-        //если не моя удаляю карточку со страницы
-        card.remove();
-      });
-    } else {
-      //удаляю кнопку корзины
-      cardTrash.remove('.card__trash')
-    }
-  })
+  getProfileInfo()
+    .then((res) => {
+      //если карточка моя
+      if (res._id === data.owner._id) {
+        // вешаю событие на корзину
+        cardTrash.addEventListener('click', function () {
+          openPopup(popupDelete)
+          //запиcываю id карточки в id попапа формы удаления
+          popupDelete.querySelector('.popup__form').id = data._id;
+          //вешаю слушатель на кнопку подтверждения удаления карточки
+          popupButtonDelete.addEventListener('click', function () { card.remove() })
+          // //если не моя удаляю карточку со страницы
+          // card.remove();
+        });
+      } else {
+        //удаляю кнопку корзины
+        cardTrash.remove('.card__trash')
+      }
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    });
 
   return card
 }

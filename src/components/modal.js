@@ -54,10 +54,16 @@ function handlerCardFormSubmit(evt) {
         //закрываю попап
         closePopup(popupCard)
         popupButtonCard.textContent = "Создать"
+        //получаю карточки c сервера
         return res
       }
-        , 1500)
+        , 1000)
+      addСard(res.name, res.link, res)
     })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    });
+
 }
 
 //функция обработчик «отправки» формы для профиля
@@ -77,8 +83,13 @@ function handlerProfileFormSubmit(evt) {
         popupButtonProfile.textContent = "Сохранить"
         return res
       }
-        , 1500)
+        , 1000)
+      //обновляю данные пользователя
+      updateProfileInfo(res);
     })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    });
   // profileName.textContent = popupName.value;
   // profileJob.textContent = popupJob.value;
 }
@@ -89,6 +100,9 @@ function handlerCardFormDelete(evt) {
   evt.preventDefault();
   //удаляю карточку с сервера
   deleteCardServer(evt.target.id)
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    });
   //закрываю попап
   closePopup(popupDelete);
 }
@@ -99,7 +113,7 @@ function handlerCardFormAvatar(evt) {
   evt.preventDefault();
   //присваиваю кнопке значение
   popupButtonAvatar.textContent = "Сохранение..."
-  //удаляю карточку с сервера
+  //отправляю обновленную карточку на сервера
   setAvatar(popupAvatarLink.value)
     .then((res) => {
       setTimeout(() => {
@@ -110,8 +124,14 @@ function handlerCardFormAvatar(evt) {
         popupButtonAvatar.textContent = "Сохранить"
         return res
       }
-        , 1500)
+        , 1000)
+      //обновляю данные пользователя
+      updateProfileInfo(res);
     })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    });
+
 }
 
 // Прикрепляю обработчик к формам:
