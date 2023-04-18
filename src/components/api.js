@@ -24,9 +24,6 @@ export let getInitialCards = () => {
     .then((res) => {
       return res;
     })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
 }
 //загрузка информации о пользователе с сервера
 export async function getProfileInfo() {
@@ -35,7 +32,6 @@ export async function getProfileInfo() {
   })
     .then(getResponse)
     .then((res) => { return res; })
-    .catch((err) => { console.log(err); });
 }
 //функция сохраняет данные профиля на сервере
 export const setProfileInfo = (name, about) => {
@@ -50,9 +46,6 @@ export const setProfileInfo = (name, about) => {
   })
     .then(getResponse)
     .then((res) => { return res })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
 }
 
 //Функция добаляет новую карточку на сервер
@@ -67,9 +60,6 @@ export function addNewCardServer(name, link) {
   })
     .then(getResponse)
     .then((res) => { return res; })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
 }
 
 //функция удаляет карточку  с сервера
@@ -80,9 +70,6 @@ export function deleteCardServer(cardId) {
   })
     .then(getResponse)
     .then((res) => { return res; })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
 }
 
 //функция постановки лайка
@@ -93,9 +80,6 @@ export function setLike(cardId) {
   })
     .then(getResponse)
     .then((res) => { return res; })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
 }
 
 //функция снятия лайка
@@ -106,9 +90,6 @@ export function deleteLike(cardId) {
   })
     .then(getResponse)
     .then((res) => { return res; })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
 }
 
 //функция смены аватара
@@ -123,9 +104,6 @@ export const setAvatar = (url) => {
   })
     .then(getResponse)
     .then((res) => { return res })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
-    });
 }
 
 
