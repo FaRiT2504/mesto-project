@@ -9,7 +9,7 @@ const object = {
 
 //функция, которая добавляет класс с ошибкой. Получает параметром форму, в которой
 // находится проверяемое поле, и само это поле
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (formElement, inputElement, errorMessage, object) => {
   // выбираю текст ошибки на основе уникального класса
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
 
@@ -21,7 +21,7 @@ const showInputError = (formElement, inputElement, errorMessage) => {
 
 //функция, которая удаляет класс с ошибкой.Получает параметром форму, в которой
 // находится проверяемое поле, и само это поле
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (formElement, inputElement, object) => {
   // Нахожу элемент ошибки
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(object.inputErrorClass);
@@ -40,10 +40,10 @@ const checkInputValidity = (formElement, inputElement) => {
     inputElement.setCustomValidity("");
   }
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(formElement, inputElement, inputElement.validationMessage, object);
   }
   else {
-    hideInputError(formElement, inputElement);
+    hideInputError(formElement, inputElement, object);
   }
 };
 
@@ -64,7 +64,7 @@ const setEventListeners = (formElement, object) => {
   });
 };
 
-function enableValidation({ }) {
+function enableValidation(object) {
   const formList = Array.from(document.querySelectorAll(object.formSelector));
   formList.forEach(function (formElement) {
     formElement.addEventListener('submit', function (evt) {
@@ -86,7 +86,7 @@ function disableButton(buttonElement, object) {
   buttonElement.setAttribute('disabled', true)
 }
 // функция активировации кнопки сабмита
-function activeButton(buttonElement, object) {
+export function activeButton(buttonElement, object) {
   buttonElement.classList.remove(object.inactiveButtonClass);
   buttonElement.removeAttribute('disabled')
 }

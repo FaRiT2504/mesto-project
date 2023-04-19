@@ -1,6 +1,8 @@
-import { openPopup } from "./utils.js"
-import { getInitialCards, getProfileInfo, setLike, deleteLike } from "./api.js"
-import { popupDelete } from "./modal.js"
+import { openPopup, closePopup } from "./utils.js"
+import { getInitialCards, getProfileInfo, setLike, deleteLike, deleteCardServer } from "./api.js"
+import { userId } from "./index.js"
+import { object, activeButton } from "./validate.js"
+import { cardDeleteForm, popupDelete, handleSubmit } from "./modal.js"
 //нахожу секцию куда буду добавлять свои карточки
 const cards = document.querySelector('.cards');
 //нахожу div для вставки картинки в попап с всплывающей картинкой
@@ -10,7 +12,8 @@ const popupPictureCaption = document.querySelector('.popup-picture__caption');
 //нахожу модальное окно с всплывающей картинкой в DOM
 const popupPicture = document.querySelector('#popup-picture');
 //нахожу кнопку удаления карточки .popup__button_delete
-const popupButtonDelete = document.querySelector('.popup__button_delete');
+export const popupButtonDelete = document.querySelector('.popup__button_delete');
+export let cardIdDelete = null;
 // //массив готовых карточек
 // const initialCards = [
 //   {
@@ -51,8 +54,6 @@ getInitialCards()
     console.log(err); // выводим ошибку в консоль
   });
 
-
-
 //функция создания карточек
 function createCard(titleValue, linkValue, data) {
   //получаю содержимое тега template
@@ -65,8 +66,17 @@ function createCard(titleValue, linkValue, data) {
   const cardLikesCount = card.querySelector('.card__likes-count');
   //нахожу кнопку корзины
   const cardTrash = card.querySelector('.card__trash')
+  //нахожу иконку лайка
+  const cardIcon = card.querySelector('.card__icon')
   //показываю количество лайков
   cardLikesCount.textContent = data.likes.length
+  //проверяю есть ли лайк пользователя на карточке, если есть делаю лайк активным
+  const likeActive = data.likes.some((item) => {
+    return item = userId
+  })
+  if (likeActive) {
+    cardIcon.classList.add('card__icon_active');
+  }
   //присваиваю название карточке
   card.querySelector('.card__description').textContent = String(titleValue);
   //вставляю картинку в  карточку
@@ -76,19 +86,27 @@ function createCard(titleValue, linkValue, data) {
     //проверяю есть ли класс card__icon_active в элементе
     if (evt.target.classList.contains('card__icon_active')) {
       //если есть удаляю  лайк
-      deleteLike(data._id).then((res) => {
-        cardLikesCount.textContent = res.likes.length
-        //и стираю сердечко
-        evt.target.classList.remove('card__icon_active');
-      })
+      deleteLike(data._id)
+        .then((res) => {
+          cardLikesCount.textContent = res.likes.length
+          //и стираю сердечко
+          evt.target.classList.remove('card__icon_active');
+        })
+        .catch((err) => {
+          console.log(err); // выводим ошибку в консоль
+        });
     } else {
       //если класса card__icon_active нет в элементе
       //ставлю лайк
-      setLike(data._id).then((res) => {
-        cardLikesCount.textContent = res.likes.length
-        //и закрашиваю сердечко
-        evt.target.classList.add('card__icon_active');
-      })
+      setLike(data._id)
+        .then((res) => {
+          cardLikesCount.textContent = res.likes.length
+          //и закрашиваю сердечко
+          evt.target.classList.add('card__icon_active');
+        })
+        .catch((err) => {
+          console.log(err); // выводим ошибку в консоль
+        });
     }
 
     // //добавляю класс card__icon_active если его нет и удаляю  если он есть
@@ -103,29 +121,34 @@ function createCard(titleValue, linkValue, data) {
     openPopup(popupPicture)
   });
 
-  getProfileInfo()
-    .then((res) => {
-      //если карточка моя
-      if (res._id === data.owner._id) {
-        // вешаю событие на корзину
-        cardTrash.addEventListener('click', function () {
-          openPopup(popupDelete)
-          //запиcываю id карточки в id попапа формы удаления
-          popupDelete.querySelector('.popup__form').id = data._id;
-          //вешаю слушатель на кнопку подтверждения удаления карточки
-          popupButtonDelete.addEventListener('click', function () { card.remove() })
-          // //если не моя удаляю карточку со страницы
-          // card.remove();
-        });
-      } else {
-        //удаляю кнопку корзины
-        cardTrash.remove('.card__trash')
-      }
-    })
-    .catch((err) => {
-      console.log(err); // выводим ошибку в консоль
+  //если карточка моя
+  if (userId === data.owner._id) {
+    // вешаю событие на корзину
+    cardTrash.addEventListener('click', function () {
+      openPopup(popupDelete)
+      //активирую кнопку
+      activeButton(popupButtonDelete, object)
+      //запиcываю id карточки в id попапа формы удаления
+      popupDelete.querySelector('.popup__form').id = data._id;
+      // Прикрепляю обработчик к форме
+      cardDeleteForm.addEventListener('submit', function handlerCardFormDelete(evt) {
+        // функция которая возвращает промис
+        function makeRequest() {
+          //это позволяет потом дальше продолжать цепочку `then, catch, finally`
+          return deleteCardServer(evt.target.id)
+            .then(() => {
+              // удаляю карточку
+              card.remove()
+            })
+        }
+        //универсальная функция, передаем в нее запрос, событие и текст изменения кнопки (если нужен другой, а не `"Сохранение..."`)
+        handleSubmit(makeRequest, evt);
+      });
     });
-
+  } else {
+    //удаляю кнопку корзины
+    cardTrash.remove('.card__trash')
+  }
   return card
 }
 
