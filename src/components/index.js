@@ -38,7 +38,7 @@ profileButton.addEventListener('click', () => {
   openPopup(popupProfile)
 });
 
-//получаю id пользователя
+//получаю id пользователя(почему то иногда приходят промисы)
 export let userId = getProfileInfo()
   .then((userData) => userId = userData._id)
   .catch(err => {

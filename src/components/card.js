@@ -34,11 +34,8 @@ function createCard(titleValue, linkValue, data) {
   cardLikesCount.textContent = data.likes.length
   //проверяю есть ли лайк пользователя на карточке
   const likeActive = data.likes.some((item) => {
-    console.log(userId);
     return item._id = userId
   })
-
-
   //если есть делаю лайк активным
   if (likeActive) {
     cardIcon.classList.add('card__icon_active');
