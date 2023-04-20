@@ -13,46 +13,8 @@ const popupPictureCaption = document.querySelector('.popup-picture__caption');
 const popupPicture = document.querySelector('#popup-picture');
 //нахожу кнопку удаления карточки .popup__button_delete
 export const popupButtonDelete = document.querySelector('.popup__button_delete');
-export let cardIdDelete = null;
-// //массив готовых карточек
-// const initialCards = [
-//   {
-//     name: 'Архыз',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-//   },
-//   {
-//     name: 'Челябинская область',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-//   },
-//   {
-//     name: 'Иваново',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-//   },
-//   {
-//     name: 'Камчатка',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-//   },
-//   {
-//     name: 'Байкал',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-//   }
-// ];
-
-// //добавляю в template шесть карточек из массива initialCards
-// initialCards.forEach((item) => addcard(item.name, item.link))
-
-//получаю карточки c сервера
-getInitialCards()
-  .then((res) => {
-    res.forEach((item) => addСard(item.name, item.link, item))
-  })
-  .catch((err) => {
-    console.log(err); // выводим ошибку в консоль
-  });
+//при открытии попапа записываю сюда карточку которую хочу удалить и её id
+export let cardDelete = null
 
 //функция создания карточек
 function createCard(titleValue, linkValue, data) {
@@ -70,10 +32,14 @@ function createCard(titleValue, linkValue, data) {
   const cardIcon = card.querySelector('.card__icon')
   //показываю количество лайков
   cardLikesCount.textContent = data.likes.length
-  //проверяю есть ли лайк пользователя на карточке, если есть делаю лайк активным
+  //проверяю есть ли лайк пользователя на карточке
   const likeActive = data.likes.some((item) => {
-    return item = userId
+    console.log(userId);
+    return item._id = userId
   })
+
+
+  //если есть делаю лайк активным
   if (likeActive) {
     cardIcon.classList.add('card__icon_active');
   }
@@ -128,22 +94,10 @@ function createCard(titleValue, linkValue, data) {
       openPopup(popupDelete)
       //активирую кнопку
       activeButton(popupButtonDelete, object)
-      //запиcываю id карточки в id попапа формы удаления
-      popupDelete.querySelector('.popup__form').id = data._id;
-      // Прикрепляю обработчик к форме
-      cardDeleteForm.addEventListener('submit', function handlerCardFormDelete(evt) {
-        // функция которая возвращает промис
-        function makeRequest() {
-          //это позволяет потом дальше продолжать цепочку `then, catch, finally`
-          return deleteCardServer(evt.target.id)
-            .then(() => {
-              // удаляю карточку
-              card.remove()
-            })
-        }
-        //универсальная функция, передаем в нее запрос, событие и текст изменения кнопки (если нужен другой, а не `"Сохранение..."`)
-        handleSubmit(makeRequest, evt);
-      });
+      //записываю  саму карточку которую хочу удалить
+      cardDelete = card
+      //записываю id карточки которую хочу удалить
+      cardDelete.id = data._id
     });
   } else {
     //удаляю кнопку корзины
@@ -162,3 +116,36 @@ function addСard(titleValue, linkValue, data) {
 
 export { addСard }
 
+
+
+
+// //массив готовых карточек
+// const initialCards = [
+//   {
+//     name: 'Архыз',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+//   },
+//   {
+//     name: 'Челябинская область',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+//   },
+//   {
+//     name: 'Иваново',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+//   },
+//   {
+//     name: 'Камчатка',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+//   },
+//   {
+//     name: 'Холмогорский район',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+//   },
+//   {
+//     name: 'Байкал',
+//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+//   }
+// ];
+
+// //добавляю в template шесть карточек из массива initialCards
+// initialCards.forEach((item) => addcard(item.name, item.link))

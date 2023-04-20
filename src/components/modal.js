@@ -1,4 +1,4 @@
-import { addСard } from "./card.js"
+import { addСard, cardIdDelete, cardDelete } from "./card.js"
 import { closePopup } from "./utils.js"
 import { enableValidation, object } from "./validate.js"
 import { setProfileInfo, addNewCardServer, getInitialCards, deleteCardServer, setAvatar } from "./api.js"
@@ -111,6 +111,20 @@ export function handlerCardFormAvatar(evt) {
       .then((res) => {
         profileAvatar.style.backgroundImage = `url(${res.avatar})`
       });
+  }
+  //универсальная функция, передаем в нее запрос, событие и текст изменения кнопки (если нужен другой, а не `"Сохранение..."`)
+  handleSubmit(makeRequest, evt);
+}
+
+// Прикрепляю обработчик к форме
+export function handlerCardFormDelete(evt) {
+  // функция которая возвращает промис
+  function makeRequest() {
+    return deleteCardServer(cardDelete.id)
+      .then(() => {
+        // удаляю карточку
+        cardDelete.remove()
+      })
   }
   //универсальная функция, передаем в нее запрос, событие и текст изменения кнопки (если нужен другой, а не `"Сохранение..."`)
   handleSubmit(makeRequest, evt);

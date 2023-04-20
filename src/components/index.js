@@ -1,8 +1,8 @@
 import { object, enableValidation, disableButton } from "./validate.js"
-import { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, updateProfileInfo, popupAvatar, popupButtonCard, popupButtonProfile, popupButtonAvatar, profileForm, cardForm, cardDeleteForm, avatarForm, handlerCardFormAvatar, handlerProfileFormSubmit, handlerCardFormSubmit } from "./modal.js"
+import { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, updateProfileInfo, popupAvatar, popupButtonCard, popupButtonProfile, popupButtonAvatar, profileForm, cardForm, cardDeleteForm, avatarForm, handlerCardFormAvatar, handlerProfileFormSubmit, handlerCardFormSubmit, handlerCardFormDelete } from "./modal.js"
 import { openPopup, closePopup } from "./utils.js"
 import { getProfileInfo, getInitialCards } from "./api.js"
-import { popupButtonDelete } from "./card.js"
+import { popupButtonDelete, addСard } from "./card.js"
 import './../pages/index.css'
 // Нахожу кнопку редактировать в DOM
 const profileButton = document.querySelector('.profile__button_type_edit');
@@ -25,7 +25,7 @@ popupButtonDelete.textContent = "Да"
 // Прикрепляю обработчик к формам:
 profileForm.addEventListener('submit', handlerProfileFormSubmit);
 cardForm.addEventListener('submit', handlerCardFormSubmit);
-// cardDeleteForm.addEventListener('submit', handlerCardFormDelete);
+cardDeleteForm.addEventListener('submit', handlerCardFormDelete);
 avatarForm.addEventListener('submit', handlerCardFormAvatar);
 
 //вешаем событие на кнопку редактировать(открытие popup)
@@ -38,12 +38,10 @@ profileButton.addEventListener('click', () => {
   openPopup(popupProfile)
 });
 
-//обновляю информацию о пользователе с сервера  и получаю id
-export let userId = getProfileInfo().then(function (res) {
-  updateProfileInfo(res)
-  return userId = res._id;
-})
-  .catch((err) => {
+//получаю id пользователя
+export let userId = getProfileInfo()
+  .then((userData) => userId = userData._id)
+  .catch(err => {
     console.log(err); // выводим ошибку в консоль
   });
 
@@ -67,6 +65,43 @@ avatar.addEventListener('click', () => openPopup(popupAvatar));
 
 //функция валидации
 enableValidation(object);
+
+Promise.all([getProfileInfo(), getInitialCards()])
+  .then(([userData, cards]) => {
+    //установка данных пользователя
+    updateProfileInfo(userData)
+    //отрисовка карточек
+    cards.forEach((item) => addСard(item.name, item.link, item))
+  })
+  .catch(err => {
+    console.log(err); // выводим ошибку в консоль
+  });
+
+
+
+
+
+
+
+// //обновляю информацию о пользователе с сервера  и получаю id
+// export let userId = getProfileInfo().then(function (res) {
+//   updateProfileInfo(res)
+//   return userId = res._id;
+// })
+//   .catch((err) => {
+//     console.log(err); // выводим ошибку в консоль
+//   });
+
+// //получаю карточки c сервера
+// getInitialCards()
+//   .then((res) => {
+//     res.forEach((item) => addСard(item.name, item.link, item))
+//   })
+//   .catch((err) => {
+//     console.log(err); // выводим ошибку в консоль
+//   });
+
+
 
 
 
