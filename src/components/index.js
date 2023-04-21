@@ -12,6 +12,9 @@ const cardButton = document.querySelector('.profile__button_type_add');
 const popups = document.querySelectorAll('.popup');
 //нахожу аватар на в DOM
 const avatar = document.querySelector('.profile__avatar');
+//получаю данные пользователя
+export let userId = null
+
 
 // //находим все крестики в проекте по универсальному селектору
 // const closeButtons = document.querySelectorAll('.popup__close')
@@ -38,13 +41,6 @@ profileButton.addEventListener('click', () => {
   openPopup(popupProfile)
 });
 
-//получаю id пользователя(почему то иногда приходят промисы)
-export let userId = getProfileInfo()
-  .then((userData) => userId = userData._id)
-  .catch(err => {
-    console.log(err); // выводим ошибку в консоль
-  });
-
 //вешаю событие на крестик и на оверлей
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
@@ -70,16 +66,13 @@ Promise.all([getProfileInfo(), getInitialCards()])
   .then(([userData, cards]) => {
     //установка данных пользователя
     updateProfileInfo(userData)
+    userId = userData.id
     //отрисовка карточек
     cards.forEach((item) => addСard(item.name, item.link, item))
   })
   .catch(err => {
     console.log(err); // выводим ошибку в консоль
   });
-
-
-
-
 
 
 
