@@ -1,3 +1,13 @@
+import { profileName, profileJob, profileAvatar } from "./modal.js"
+
+const config = {
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-22',
+  headers: {
+    authorization: 'da373be5-de2f-43e0-943d-28642416cb3a',
+    'Content-Type': 'application/json'
+  }
+}
+
 class Api {
   constructor(options) {
     // тело конструктора
