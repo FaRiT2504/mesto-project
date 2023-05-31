@@ -140,155 +140,79 @@ export const updateProfileInfo = (object) => {
 export { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, profileAvatar, popupDelete, popupAvatar, popupButtonCard, popupButtonAvatar, popupButtonProfile, cardDeleteForm, avatarForm, profileForm, cardForm }
 
 
+export class Popup {
+  constructor(selector) {
+    this._element = document.querySelector(selector)
+  }
 
-// //функция обработчик «отправки» формы для удаления карточки
-// function handlerCardFormDelete(evt) {
-//   // функция которая возвращает промис
-//   function makeRequest() {
-//     //это позволяет потом дальше продолжать цепочку `then, catch, finally`
-//     return deleteCardServer(evt.target.id)
+  _handleEsc (e) {
+    if (e.key === 'Escape') {this._close(document.querySelector('.popup_active'))}
+  }
 
-//   }
-//   //универсальная функция, передаем в нее запрос, событие и текст изменения кнопки (если нужен другой, а не `"Сохранение..."`)
-//   handleSubmit(makeRequest, evt);
-// }
+  _handleOverlayClose (e) {
+    if(e.target.className.includes('popup_active')) {this._close(e.target)}
+  }
 
+  open() {
+    this._element.classList.add('popup_active')
+    this.setEventListeners()
+  }
 
+  close() {
+    this._element.classList.remove('popup_active')
+    this.removeEventListeners()
+  }
 
-// //функция обработчик «отправки» формы для удаления карточки
-// function handlerCardFormDelete(evt) {
-//   // Эта строчка отменяет стандартную отправку формы.
-//   evt.preventDefault();
-//   //удаляю карточку с сервера
-//   deleteCardServer(evt.target.id)
-//     .then((res) => {
-//       //удаляю карточку
-//       card.remove()
-//       //закрываю попап
-//       closePopup(popupDelete);
-//       return res
-//     })
-//     .catch((err) => {
-//       console.log(err); // выводим ошибку в консоль
-//     });
-// }
+  setEventListeners() {
+    document.addEventListener('keydown', this._handleEsc)
+    this._element.addEventListener('click', this._handleOverlayClose)
+  }
 
+  removeEventListeners() {
+    document.removeEventListener('keydown', this._handleEsc)
+    this._element.removeEventListener('click', this._handleOverlayClose)
+  }
+}
 
+export class PopupWithImage extends Popup {
+  constructor(selector) {
+    super(selector)
+  }
 
+  open(link) {
+    super.open()
+    this._element.querySelector('.popup-picture__img').src = link
+  }
+}
 
-// setUserInfo({
-//   name: nameInput.value,
-//   about: jobInput.value
-// })
+export class PopupWithForm extends Popup {
+  constructor(selector, callback) {
+    super(selector)
+    this._callback = callback
+    this._form = this._element.querySelector('.popup__form')
+  }
 
-// .then((info) =>{
-//   updateUserInfo(info);
-//   closePopup(profilePopup);
-// })
-// .catch((err) => console.log(`Ошибка при обновлении данных пользователя: ${err}`)
-// )
-// .finally(() => {
-//   renderLoading(profilePopup);
-// })
+  _getInputValues() {
+    const formData = new FormData(this._form)
+    return Object.fromEntries(formData)
+  }
 
+  _submitForm() {
+    this._callback(this._getInputValues())
+  }
 
+  setEventListeners() {
+    super.setEventListeners()
+    this._form.addEventListener('submit', this._submitForm)
+  }
 
-// // можно сделать универсальную функцию, которая принимает функцию запроса, объект события и текст во время загрузки
-// function handleSubmit(request, evt, loadingText = "Сохранение...") {
-//   // всегда нужно предотвращать перезагрузку формы при сабмите
-//   evt.preventDefault();
+  removeEventListeners() {
+    super.removeEventListeners()
+    this._form.addEventListener('submit', this._submitForm)
+  }
 
-//   // универсально получаем кнопку сабмита из `evt`
-//   const submitButton = evt.submitter;
-//   // записываем начальный текст кнопки до вызова запроса
-//   const initialText = submitButton.textContent;
-//   // изменяем текст кнопки до вызова запроса
-//   renderLoading(true, submitButton, initialText, loadingText);
-//   request()
-//     .then(() => {
-//       // любую форму нужно очищать после успешного ответа от сервера
-//       // а так же `reset` может запустить деактивацию кнопки сабмита (смотрите в `validate.js`)
-//       evt.target.reset();
-//     })
-//     .catch((err) => {
-//       // в каждом запросе нужно ловить ошибку
-//       console.error(`Ошибка: ${err}`);
-//     })
-//     // в каждом запросе в `finally` нужно возвращать обратно начальный текст кнопки
-//     .finally(() => {
-//       renderLoading(false, submitButton, initialText);
-//     });
-// }
-
-// // пример оптимизации обработчика сабмита формы профиля
-// function handleProfileFormSubmit(evt) {
-//   // создаем функцию, которая возвращает промис, так как любой запрос возвращает его
-//   function makeRequest() {
-//     // вот это позволяет потом дальше продолжать цепочку `then, catch, finally`
-//     return editProfile(popupName.value, popupProfession.value).then((userData) => {
-//       profileName.textContent = userData.name;
-//       profileProfession.textContent = userData.about;
-//     });
-//   }
-//   // вызываем универсальную функцию, передавая в нее запрос, событие и текст изменения кнопки (если нужен другой, а не `"Сохранение..."`)
-//   handleSubmit(makeRequest, evt);
-// }
-
-
-
-
-
-// //функция обработчик «отправки» формы для профиля
-// function handlerProfileFormSubmit(evt) {
-//   // Эта строчка отменяет стандартную отправку формы.
-//   evt.preventDefault();
-//   //показываем "Сохранение..." когда идет загрузка
-//   renderLoading(true)
-//   //присваиваю кнопке значение
-//   popupButtonProfile.textContent = "Сохранение..."
-//   //отображаем на странице то что сохранилось в форме «Имя» и «О себе»
-//   setProfileInfo(popupName.value, popupJob.value)
-//     .then((res) => {
-//       //ощищаю импуты
-//       cardForm.reset();
-//       //закрываю попап
-//       closePopup(popupProfile)
-//       popupButtonProfile.textContent = "Сохранить"
-//       //обновляю данные пользователя
-//       updateProfileInfo(res);
-//       return res
-//     })
-//     .catch((err) => {
-//       console.log(err); // выводим ошибку в консоль
-//     });
-//   // profileName.textContent = popupName.value;
-//   // profileJob.textContent = popupJob.value;
-// }
-
-
-
-// //функция обработчик «отправки» формы для карточек
-// function handlerCardFormSubmit(evt) {
-//   // Эта строчка отменяет стандартную отправку формы.
-//   evt.preventDefault();
-
-//   // //вызываю функцию добавления карточек
-//   // addСard(popupCardTitle.value, popupCardLink.value);
-
-//   //присваиваю кнопке значение
-//   popupButtonCard.textContent = "Сохранение..."
-//   //добавляю на сервер новую карточку
-//   addNewCardServer(popupCardTitle.value, popupCardLink.value)
-//     .then((res) => {
-//       cardForm.reset();
-//       //закрываю попап
-//       closePopup(popupCard)
-//       popupButtonCard.textContent = "Создать"
-//       addСard(res.name, res.link, res)
-//       //получаю карточки c сервера
-//       return res
-//     })
-//     .catch((err) => {
-//       console.log(err); // выводим ошибку в консоль
-//     });
-// }
+  close() {
+    super.close()
+    this._form.reset()
+  }
+}
