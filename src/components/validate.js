@@ -99,7 +99,7 @@ function toggleButtonState(inputList, buttonElement, object) {
 
 export { object, showInputError, hideInputError, checkInputValidity, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState, disableButton }
 
-export default class Validator {
+export default class FormValidator {
   constructor(classes) {
     this._formSelector = classes.formSelector;
     this._inputSelector = classes.inputSelector;
