@@ -18,14 +18,16 @@ export let cardDelete = null
 
 //класс создания карточек
 class Card {
-  constructor(data, titleValue, linkValue, selector) {
+  constructor(data, titleValue, linkValue, setLike, deleteLike, activeButton, selector) {
     this.titleValue = titleValue;
     this.linkValue = linkValue;
     this._selector = selector;
     this.likes = data.likes;
-    this._id = data._id
-    this.owner._id = data.owner._id
-
+    this._id = data._id;
+    this.owner._id = data.owner._id;
+    this.setLike = setLike;
+    this.deleteLike = deleteLike;
+    this.activeButton = activeButton;
   }
 
   //метод возвращает шаблон карточки
@@ -72,7 +74,7 @@ class Card {
       //проверяю есть ли класс card__icon_active в элементе
       if (evt.target.classList.contains('card__icon_active')) {
         //если есть удаляю  лайк
-        deleteLike(data._id)
+        this.deleteLike(data._id)
           .then((res) => {
             cardLikesCount.textContent = res.likes.length
             //и стираю сердечко
@@ -84,7 +86,7 @@ class Card {
       } else {
         //если класса card__icon_active нет в элементе
         //ставлю лайк
-        setLike(this._id)
+        this.setLike(this._id)
           .then((res) => {
             cardLikesCount.textContent = res.likes.length
             //и закрашиваю сердечко
@@ -98,6 +100,7 @@ class Card {
       // //добавляю класс card__icon_active если его нет и удаляю  если он есть
       // evt.target.classList.toggle('card__icon_active');
     });
+
     //вешаем событие на  картинку(открытие popup)
     cardPicture.addEventListener('click', function () {
       //вставляю картинку в попап с всплывающей картинкой
@@ -113,7 +116,7 @@ class Card {
       cardTrash.addEventListener('click', function () {
         openPopup(popupDelete)
         //активирую кнопку
-        activeButton(popupButtonDelete, object)
+        this.activeButton(popupButtonDelete, object)
         //записываю  саму карточку которую хочу удалить
         cardDelete = this._element
         //записываю id карточки которую хочу удалить
