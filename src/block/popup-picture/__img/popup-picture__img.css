@@ -1,8 +1,6 @@
 .popup-picture__img {
+  object-fit: contain;
 
-  background: no-repeat;
-  background-position: center;
-  background-size: contain;
   /* background: round; */
   width: 100%;
   min-height: 75vh;
