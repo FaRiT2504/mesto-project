@@ -1,19 +1,23 @@
 export class UserInfo {
-  constructor({ nameSelector, jobSelector }, getProfileInfo, handlerProfileFormSubmit) {
-    this.nameSelector = nameSelector;
-    this.jobSelector = jobSelector;
-    this.getProfileInfo = getProfileInfo;
-    this.handlerProfileFormSubmit = handlerProfileFormSubmit;
-    this.updateProfileInfo = updateProfileInfo;
-
+  constructor({ nameSelector, jobSelector, avatarSelector }, getProfileInfo, updateProfileInfo) {
+    this.profileName = document.querySelector(nameSelector);
+    this.profileJob = document.querySelector(jobSelector);
+    this._updateProfileInfo = updateProfileInfo;
+    getProfileInfo().then(user => {
+      this.profileName.textContent = user.name;
+      this.profileJob.textContent = user.about;
+    })
   }
   getUserInfo() {
-    return this.getProfileInfo;
+    return {
+      name: this.profileName.textContent,
+      about: this.profileJob.textContent
+    }
   }
-  setUserInfo() {
-    this.handlerProfileFormSubmit;
-    profileName.textContent = this.getUserInfo().name;
-    profileJob.textContent = this.getUserInfo().about;
-    profileAvatar.style.backgroundImage = `url(${this.getUserInfo().avatar})`;
+  setUserInfo({ name, about }) {
+    this._updateProfileInfo(name, about).then(user => {
+      profileName.textContent = user.name;
+      profileJob.textContent = user.about;
+    })
   }
 }
