@@ -1,5 +1,5 @@
 export class UserInfo {
-  constructor({ nameSelector, jobSelector }, getProfileInfo, handlerProfileFormSubmit, updateProfileInfo) {
+  constructor({ nameSelector, jobSelector }, getProfileInfo, handlerProfileFormSubmit) {
     this.nameSelector = nameSelector;
     this.jobSelector = jobSelector;
     this.getProfileInfo = getProfileInfo;
@@ -12,6 +12,8 @@ export class UserInfo {
   }
   setUserInfo() {
     this.handlerProfileFormSubmit;
-    this.updateProfileInfo
+    profileName.textContent = this.getUserInfo().name;
+    profileJob.textContent = this.getUserInfo().about;
+    profileAvatar.style.backgroundImage = `url(${this.getUserInfo().avatar})`;
   }
 }
