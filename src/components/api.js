@@ -8,7 +8,7 @@ const config = {
   }
 }
 
-class Api {
+export class Api {
   constructor(options) {
     // тело конструктора
     this.baseUrl = options.baseUrl;
