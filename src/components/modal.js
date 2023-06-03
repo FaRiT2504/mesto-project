@@ -130,12 +130,12 @@ export function handlerCardFormDelete(evt) {
   handleSubmit(makeRequest, evt);
 }
 
-//функция обновляет информацию о пользователе с сервера
-export const updateProfileInfo = (object) => {
-  profileName.textContent = object.name;
-  profileJob.textContent = object.about;
-  profileAvatar.style.backgroundImage = `url(${object.avatar})`;
-};
+// //функция обновляет информацию о пользователе с сервера
+// export const updateProfileInfo = (object) => {
+//   profileName.textContent = object.name;
+//   profileJob.textContent = object.about;
+//   profileAvatar.style.backgroundImage = `url(${object.avatar})`;
+// };
 
 export { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, profileAvatar, popupDelete, popupAvatar, popupButtonCard, popupButtonAvatar, popupButtonProfile, cardDeleteForm, avatarForm, profileForm, cardForm }
 
@@ -145,12 +145,12 @@ export class Popup {
     this._element = document.querySelector(selector)
   }
 
-  _handleEsc (e) {
-    if (e.key === 'Escape') {this._close(document.querySelector('.popup_active'))}
+  _handleEsc(e) {
+    if (e.key === 'Escape') { this._close(document.querySelector('.popup_active')) }
   }
 
-  _handleOverlayClose (e) {
-    if(e.target.className.includes('popup_active')) {this._close(e.target)}
+  _handleOverlayClose(e) {
+    if (e.target.className.includes('popup_active')) { this._close(e.target) }
   }
 
   open() {
