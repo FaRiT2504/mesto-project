@@ -17,7 +17,7 @@ export const popupButtonDelete = document.querySelector('.popup__button_delete')
 export let cardDelete = null
 
 //класс создания карточек
-class Card {
+export default class Card {
   constructor(data, titleValue, linkValue, setLike, deleteLike, activeButton, selector) {
     this.titleValue = titleValue;
     this.linkValue = linkValue;

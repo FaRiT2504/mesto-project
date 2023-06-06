@@ -1,4 +1,4 @@
-import { profileName, profileJob, profileAvatar } from "./modal.js"
+// import { profileName, profileJob, profileAvatar } from "./modal.js"
 
 const config = {
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-22',
