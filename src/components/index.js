@@ -1,137 +1,38 @@
-import { object, enableValidation, disableButton } from "./validate.js"
-import { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, updateProfileInfo, popupAvatar, popupButtonCard, popupButtonProfile, popupButtonAvatar, profileForm, cardForm, cardDeleteForm, avatarForm, handlerCardFormAvatar, handlerProfileFormSubmit, handlerCardFormSubmit, handlerCardFormDelete } from "./modal.js"
-import { openPopup, closePopup } from "./utils.js"
-import { getProfileInfo, getInitialCards } from "./api.js"
-import { popupButtonDelete, addСard } from "./card.js"
-import './../pages/index.css'
-// Нахожу кнопку редактировать в DOM
-const profileButton = document.querySelector('.profile__button_type_edit');
-// Нахожу кнопку добавить новое место в DOM
-const cardButton = document.querySelector('.profile__button_type_add');
-//нахожу все попапы в DOM
-const popups = document.querySelectorAll('.popup');
-//нахожу аватар на в DOM
-const avatar = document.querySelector('.profile__avatar');
-//получаю данные пользователя
-export let userId = null
+import '../pages/index.css'
+import Api from './api';
+import { UserInfo } from "./UserInfo";
+import FormValidator from "./validate";
+import { PopupWithForm, PopupWithImage } from "./modal";
+import { addButton, avatarButton, editButton } from './utils';
 
-
-// //находим все крестики в проекте по универсальному селектору
-// const closeButtons = document.querySelectorAll('.popup__close')
-
-//Присваиваю кнопкам значение
-popupButtonCard.textContent = "Создать"
-popupButtonProfile.textContent = "Сохранение"
-popupButtonAvatar.textContent = "Сохранение"
-popupButtonDelete.textContent = "Да"
-
-// Прикрепляю обработчик к формам:
-profileForm.addEventListener('submit', handlerProfileFormSubmit);
-cardForm.addEventListener('submit', handlerCardFormSubmit);
-cardDeleteForm.addEventListener('submit', handlerCardFormDelete);
-avatarForm.addEventListener('submit', handlerCardFormAvatar);
-
-//вешаем событие на кнопку редактировать(открытие popup)
-profileButton.addEventListener('click', () => {
-  //присваиваем значениям формы «Имя» и «О себе» значения
-  //которые отображаются на странице
-  popupName.value = profileName.textContent;
-  popupJob.value = profileJob.textContent;
-  //вызываю функцию открытия попапа
-  openPopup(popupProfile)
-});
-
-//вешаю событие на крестик и на оверлей
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('popup__close')) {
-      closePopup(popup)
-    }
-  })
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-22',
+  headers: {
+    authorization: 'da373be5-de2f-43e0-943d-28642416cb3a',
+    'Content-Type': 'application/json'
+  }
 })
 
-//вешаем событие на кнопку добавить новое место(открытие popup)
-cardButton.addEventListener('click', () => openPopup(popupCard));
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__job',
+  avatarSelector: '.profile__avatar'
+}, api.getProfileInfo, api.setProfileInfo, api.setAvatar)
 
-//вешаем событие на картинку аватара
-avatar.addEventListener('click', () => openPopup(popupAvatar));
+const validator = new FormValidator({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  errorClass: 'popup__error_visible',
+})
 
-//функция валидации
-enableValidation(object);
+const avatarForm = new PopupWithForm('#popup-avatar', userInfo.setUserAvatar)
+const editForm = new PopupWithForm('#popup-edit', userInfo.setUserInfo)
+const picturePopup = new PopupWithImage('#popup-picture')
+const addForm = new PopupWithForm('#popup-add')
 
-Promise.all([getProfileInfo(), getInitialCards()])
-  .then(([userData, cards]) => {
-    //установка данных пользователя
-    updateProfileInfo(userData)
-    userId = userData.id
-    //отрисовка карточек
-    cards.forEach((item) => addСard(item.name, item.link, item))
-  })
-  .catch(err => {
-    console.log(err); // выводим ошибку в консоль
-  });
+editButton.addEventListener('click', () => editForm.open.call(editForm, userInfo.getUserInfo()))
+addButton.addEventListener('click', addForm.open.bind(addForm))
+avatarButton.addEventListener('click', avatarForm.open.bind(avatarForm))
 
-
-
-// //обновляю информацию о пользователе с сервера  и получаю id
-// export let userId = getProfileInfo().then(function (res) {
-//   updateProfileInfo(res)
-//   return userId = res._id;
-// })
-//   .catch((err) => {
-//     console.log(err); // выводим ошибку в консоль
-//   });
-
-// //получаю карточки c сервера
-// getInitialCards()
-//   .then((res) => {
-//     res.forEach((item) => addСard(item.name, item.link, item))
-//   })
-//   .catch((err) => {
-//     console.log(err); // выводим ошибку в консоль
-//   });
-
-
-
-
-
-
-// (async function main() {
-//   let temp = await getProfileInfo().then(function (res) {
-//     updateProfileInfo(res)
-//     return res._id
-//   });
-//   console.log(temp);
-// })()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+validator.enableValidation()

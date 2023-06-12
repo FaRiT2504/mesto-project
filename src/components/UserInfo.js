@@ -8,7 +8,7 @@ export class UserInfo {
     getProfileInfo().then(user => {
       this.profileName.textContent = user.name;
       this.profileJob.textContent = user.about;
-      this.profileAvatar.style.backgroundImage = user.avatar;
+      this.profileAvatar.style.backgroundImage = `url(${user.avatar})`;
     })
   }
   getUserInfo() {
@@ -17,17 +17,14 @@ export class UserInfo {
       about: this.profileJob.textContent,
     }
   }
-  setUserInfo({ name, about }) {
-    this._setProfileInfo(name, about).then(user => {
-      profileName.textContent = user.name;
-      profileJob.textContent = user.about;
-    })
-  }
+  setUserInfo = ({ name, about }) => this._setProfileInfo(name, about).then(user => {
+    this.profileName.textContent = user.name;
+    this.profileJob.textContent = user.about;
+  })
 
-  setUserAvatar(url) {
-    this._setAvatar(url)
-      .then((user) => {
-        this.profileAvatar.style.backgroundImage = `url(${user.avatar})`
-      });
-  }
+
+  setUserAvatar = ({ url }) => this._setAvatar(url)
+    .then((user) => {
+      this.profileAvatar.style.backgroundImage = `url(${user.avatar})`
+    })
 }

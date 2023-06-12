@@ -8,7 +8,7 @@ const config = {
   }
 }
 
-export class Api {
+export default class Api {
   constructor(options) {
     // тело конструктора
     this.baseUrl = options.baseUrl;
@@ -30,25 +30,25 @@ export class Api {
 
   //метод  запроса с проверкой ответа от сервера
   request(url, options) {
-    return fetch(url, options).then(this.getResponse)
+    return fetch(url, options).then(this.getResponse).catch(err => console.log(err))
   }
 
   //загрузка карточек с сервера
-  getInitialCards() {
+  getInitialCards = () => {
     return this.request(`${this.baseUrl}/cards`, {
       headers: this.headers
     })
   }
 
   //загрузка информации о пользователе с сервера
-  getProfileInfo() {
-    return request(`${this.baseUrl}/users/me`, {
+  getProfileInfo = () => {
+    return this.request(`${this.baseUrl}/users/me`, {
       headers: this.headers
     })
   }
 
   //метод  сохраняет данные профиля на сервере
-  setProfileInfo(name, about) {
+  setProfileInfo = (name, about) => {
     return this.request(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
@@ -60,7 +60,7 @@ export class Api {
   }
 
   //метод  добаляет новую карточку на сервер
-  addNewCardServer(name, link) {
+  addNewCardServer = (name, link) => {
     return this.request(`${this.baseUrl}/cards`, {
       method: 'POST',
       headers: this.headers,
@@ -72,7 +72,7 @@ export class Api {
   }
 
   //метод  удаляет карточку  с сервера
-  deleteCardServer(cardId) {
+  deleteCardServer = (cardId) => {
     return this.request(`${this.baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this.headers,
@@ -80,7 +80,7 @@ export class Api {
   }
 
   //метод  постановки лайка
-  setLike(cardId) {
+  setLike = (cardId) => {
     return this.request(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: 'PUT',
       headers: this.headers,
@@ -88,7 +88,7 @@ export class Api {
   }
 
   //метод  снятия лайка
-  deleteLike(cardId) {
+  deleteLike = (cardId) => {
     return this.request(`${this.baseUrl}/cards/likes/${cardId}`, {
       method: 'DELETE',
       headers: this.headers,
@@ -96,7 +96,7 @@ export class Api {
   }
 
   //метод  смены аватара
-  setAvatar(url) {
+  setAvatar = (url) => {
     return this.request(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
