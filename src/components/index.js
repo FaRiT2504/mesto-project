@@ -29,7 +29,7 @@ const validator = new FormValidator({
 })
 
 const picturePopup = new PopupWithImage('#popup-picture')
-const deletePopup = new PopupWithForm('#popup-delete')
+const deletePopup = new PopupWithForm('#popup-delete', api.deleteCardServer)
 
 const section = new Section({
   items: api.getInitialCards().then(items => {
@@ -39,15 +39,15 @@ const section = new Section({
     })
   }),
   renderer: (item => {
-    document.querySelector('.cards').prepend(item)
+    document.querySelector('.cards').append(item)
   })
 })
 
 const avatarForm = new PopupWithForm('#popup-avatar', userInfo.setUserAvatar)
 const editForm = new PopupWithForm('#popup-edit', userInfo.setUserInfo)
 const addForm = new PopupWithForm('#popup-add', pictureData => {
-  api.addNewCardServer(pictureData.title, pictureData.url).then(picture => {
-    const card = new Card(picture, api.setLike, api.deleteLike, api.deleteCardServer, '#card-template')
+  return api.addNewCardServer(pictureData.title, pictureData.url).then(picture => {
+    const card = new Card(picture, api.setLike, api.deleteLike, api.deleteCardServer, '#card-template', picturePopup, deletePopup, userInfo.getUserInfo)
     section.addItem(card.generate())
   })
 })

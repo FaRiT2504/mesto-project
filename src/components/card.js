@@ -58,12 +58,13 @@ export default class Card {
   _setEventListeners() {
     //нахожу кнопку корзины
     const cardTrash = this._element.querySelector('.card__trash')
+    const cardLikesCount = this._element.querySelector('.card__likes-count')
     //вешаю событие на кнопку лайка
-    this._element.querySelector('.card__icon').addEventListener('click', function (evt) {
+    this._element.querySelector('.card__icon').addEventListener('click', (evt) => {
       //проверяю есть ли класс card__icon_active в элементе
       if (evt.target.classList.contains('card__icon_active')) {
         //если есть удаляю  лайк
-        this.deleteLike(data._id)
+        this.deleteLike(this._id)
           .then((res) => {
             cardLikesCount.textContent = res.likes.length
             //и стираю сердечко
@@ -92,14 +93,14 @@ export default class Card {
 
     //вешаем событие на  картинку(открытие popup)
     this._element.querySelector('.card__img').addEventListener('click', () => {
-      this._popupPicture.open(this.linkValue, this.titleValue)
+      this.popupPicture.open(this.linkValue, this.titleValue)
     });
 
     //если карточка моя
     if (this.getUserInfo().userId === this.ownerId) {
       // вешаю событие на корзину
-      cardTrash.addEventListener('click', function () {
-        this.popupDelete.open()
+      cardTrash.addEventListener('click', () => {
+        this.popupDelete.open({pictureId: this._id})
         //записываю  саму карточку которую хочу удалить
         cardDelete = this._element
         //записываю id карточки которую хочу удалить

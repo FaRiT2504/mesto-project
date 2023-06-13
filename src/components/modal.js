@@ -56,6 +56,7 @@ export class PopupWithForm extends Popup {
 
   open({ name, about, pictureId }) {
     super.open()
+    console.log(name, about, pictureId)
     if (name && about) {
       this._form.elements.name.value = name
       this._form.elements.about.value = about
@@ -75,11 +76,13 @@ export class PopupWithForm extends Popup {
     return Object.fromEntries(formData)
   }
 
-  _submitForm = (e) => {
+  _submitForm(e) {
     e.preventDefault()
     const inputValues = this.pictureId ? this.pictureId : this._getInputValues()
     const submitInitialValue = this._submitButton.textContent
     this._submitButton.textContent = 'Сохранение...'
+
+    console.log(this.pictureId)
 
     this._callback(inputValues).then(() => {
       this._submitButton.textContent = submitInitialValue
@@ -89,11 +92,11 @@ export class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners()
-    this._form.addEventListener('submit', this._submitForm)
+    this._form.addEventListener('submit', this._submitForm.bind(this))
   }
 
   removeEventListeners() {
     super.removeEventListeners()
-    this._form.addEventListener('submit', this._submitForm)
+    this._form.removeEventListener('submit', this._submitForm)
   }
 }
