@@ -9,12 +9,14 @@ export class UserInfo {
       this.profileName.textContent = user.name;
       this.profileJob.textContent = user.about;
       this.profileAvatar.style.backgroundImage = `url(${user.avatar})`;
+      this.profileName.dataset.userId = user._id
     })
   }
-  getUserInfo() {
+  getUserInfo = () => {
     return {
       name: this.profileName.textContent,
       about: this.profileJob.textContent,
+      userId: this.profileName.dataset.userId
     }
   }
   setUserInfo = ({ name, about }) => this._setProfileInfo(name, about).then(user => {

@@ -39,9 +39,10 @@ export class PopupWithImage extends Popup {
     super(selector)
   }
 
-  open(link) {
+  open(link, name) {
     super.open()
     this._element.querySelector('.popup-picture__img').src = link
+    this._element.querySelector('.popup-picture__caption').textContent = name
   }
 }
 
@@ -53,11 +54,14 @@ export class PopupWithForm extends Popup {
     this._submitButton = this._form.querySelector('.popup__button')
   }
 
-  open({ name, about }) {
+  open({ name, about, pictureId }) {
     super.open()
     if (name && about) {
       this._form.elements.name.value = name
       this._form.elements.about.value = about
+    }
+    if (pictureId) {
+      this.pictureId = pictureId
     }
   }
 
@@ -73,7 +77,7 @@ export class PopupWithForm extends Popup {
 
   _submitForm = (e) => {
     e.preventDefault()
-    const inputValues = this._getInputValues()
+    const inputValues = this.pictureId ? this.pictureId : this._getInputValues()
     const submitInitialValue = this._submitButton.textContent
     this._submitButton.textContent = 'Сохранение...'
 

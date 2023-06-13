@@ -1,16 +1,3 @@
-import { openPopup, closePopup } from "./utils.js"
-import { getInitialCards, getProfileInfo, setLike, deleteLike, deleteCardServer } from "./api.js"
-import { userId } from "./index.js"
-import { object, activeButton } from "./validate.js"
-import { cardDeleteForm, popupDelete, handleSubmit } from "./modal.js"
-//нахожу секцию куда буду добавлять свои карточки
-const cards = document.querySelector('.cards');
-//нахожу div для вставки картинки в попап с всплывающей картинкой
-const popupPictureImg = document.querySelector('.popup-picture__img');
-//нахожу div для вставки описания к картинке в попапе с всплывающей картинкой
-const popupPictureCaption = document.querySelector('.popup-picture__caption');
-//нахожу модальное окно с всплывающей картинкой в DOM
-const popupPicture = document.querySelector('#popup-picture');
 //нахожу кнопку удаления карточки .popup__button_delete
 export const popupButtonDelete = document.querySelector('.popup__button_delete');
 //при открытии попапа записываю сюда карточку которую хочу удалить и её id
@@ -18,16 +5,19 @@ export let cardDelete = null
 
 //класс создания карточек
 export default class Card {
-  constructor(data, titleValue, linkValue, setLike, deleteLike, activeButton, selector) {
-    this.titleValue = titleValue;
-    this.linkValue = linkValue;
+  constructor(data, setLike, deleteLike, deleteCard, selector, popupPicture, popupDelete, getUserInfo) {
+    this.titleValue = data.name;
+    this.linkValue = data.link;
     this._selector = selector;
     this.likes = data.likes;
     this._id = data._id;
-    this.owner._id = data.owner._id;
+    this.ownerId = data.owner._id;
     this.setLike = setLike;
     this.deleteLike = deleteLike;
-    this.activeButton = activeButton;
+    this.deleteCard = deleteCard;
+    this.popupPicture = popupPicture;
+    this.popupDelete = popupDelete;
+    this.getUserInfo = getUserInfo
   }
 
   //метод возвращает шаблон карточки
@@ -35,7 +25,6 @@ export default class Card {
     const card = document
       .querySelector(this._selector)
       .content
-      .querySelector('.card')
       .cloneNode(true);
     return card;
   }
@@ -54,7 +43,7 @@ export default class Card {
     const cardIcon = this._element.querySelector('.card__icon')
     //проверяю есть ли лайк пользователя на карточке
     const likeActive = this.likes.some((item) => {
-      return item._id = userId
+      return item._id = this.getUserInfo().userId
     })
     //если есть делаю лайк активным
     if (likeActive) {
@@ -102,21 +91,15 @@ export default class Card {
     });
 
     //вешаем событие на  картинку(открытие popup)
-    cardPicture.addEventListener('click', function () {
-      //вставляю картинку в попап с всплывающей картинкой
-      popupPictureImg.style.backgroundImage = `url(${String(linkValue)})`;
-      //вставляю описание к картинке в попап с всплывающей картинкой
-      popupPictureCaption.textContent = String(titleValue);
-      openPopup(popupPicture)
+    this._element.querySelector('.card__img').addEventListener('click', () => {
+      this._popupPicture.open(this.linkValue, this.titleValue)
     });
 
     //если карточка моя
-    if (userId === this.owner._id) {
+    if (this.getUserInfo().userId === this.ownerId) {
       // вешаю событие на корзину
       cardTrash.addEventListener('click', function () {
-        openPopup(popupDelete)
-        //активирую кнопку
-        this.activeButton(popupButtonDelete, object)
+        this.popupDelete.open()
         //записываю  саму карточку которую хочу удалить
         cardDelete = this._element
         //записываю id карточки которую хочу удалить
