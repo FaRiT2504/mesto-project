@@ -2,9 +2,7 @@
   display: flex;
   justify-content: center;
   align-self: center;
-  min-height: 75vh;
   max-width: 75vw;
-  width: 100%;
   flex-direction: column;
   margin: auto;
   position: relative;
