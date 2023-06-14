@@ -10,17 +10,9 @@ export default class Section {
 
   renderItems() {
     this._renderedItems.then(items => {
-      items.forEach(item => {
+      items.slice().reverse().forEach(item => {
         this._renderer(item);
       });
     })
   }
 }
-
-// //функция добавления карточек(реализация колбека в index.js)
-// function addСard(titleValue, linkValue, data) {
-//   //вызываю функцию создания карточек
-//   const element = createCard(titleValue, linkValue, data);
-//   //добавляю новую карточку в DOM
-//   cards.prepend(element);
-// }

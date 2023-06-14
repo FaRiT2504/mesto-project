@@ -18,4 +18,4 @@
 
 В проекте принимали участие:
 
-Фомин Егор: fomin.ea2003@yandex.ru
+son1ss: fomin.ea2003@yandex.ru

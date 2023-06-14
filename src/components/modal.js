@@ -54,15 +54,16 @@ export class PopupWithForm extends Popup {
     this._submitButton = this._form.querySelector('.popup__button')
   }
 
-  open({ name, about, pictureId }) {
+  open({ name, about, pictureId, e}) {
     super.open()
     console.log(name, about, pictureId)
     if (name && about) {
       this._form.elements.name.value = name
       this._form.elements.about.value = about
     }
-    if (pictureId) {
+    if (pictureId && e) {
       this.pictureId = pictureId
+      this.card = e.target.closest('.card')
     }
   }
 
@@ -82,9 +83,7 @@ export class PopupWithForm extends Popup {
     const submitInitialValue = this._submitButton.textContent
     this._submitButton.textContent = 'Сохранение...'
 
-    console.log(this.pictureId)
-
-    this._callback(inputValues).then(() => {
+    this._callback(inputValues, this.card).then(() => {
       this._submitButton.textContent = submitInitialValue
       this.close()
     })

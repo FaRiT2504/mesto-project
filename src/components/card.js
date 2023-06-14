@@ -42,9 +42,7 @@ export default class Card {
     //нахожу иконку лайка
     const cardIcon = this._element.querySelector('.card__icon')
     //проверяю есть ли лайк пользователя на карточке
-    const likeActive = this.likes.some((item) => {
-      return item._id = this.getUserInfo().userId
-    })
+    const likeActive = this.likes.map(user => user._id).some((item) => item === this.getUserInfo().userId)
     //если есть делаю лайк активным
     if (likeActive) {
       cardIcon.classList.add('card__icon_active');
@@ -99,12 +97,8 @@ export default class Card {
     //если карточка моя
     if (this.getUserInfo().userId === this.ownerId) {
       // вешаю событие на корзину
-      cardTrash.addEventListener('click', () => {
-        this.popupDelete.open({pictureId: this._id})
-        //записываю  саму карточку которую хочу удалить
-        cardDelete = this._element
-        //записываю id карточки которую хочу удалить
-        cardDelete.id = this._id
+      cardTrash.addEventListener('click', (e) => {
+        this.popupDelete.open({pictureId: this._id, e})
       });
     } else {
       //удаляю кнопку корзины
@@ -112,140 +106,3 @@ export default class Card {
     }
   }
 }
-
-
-
-
-
-// //функция создания карточек
-// function createCard(titleValue, linkValue, data) {
-//   //получаю содержимое тега template
-//   const cardTemplate = document.querySelector('#card-template').content;
-//   //клонирую содержимое  тега template
-//   const card = cardTemplate.querySelector('.card').cloneNode(true);
-//   //нахожу картинку в модальном окне
-//   const cardPicture = card.querySelector('.card__img');
-//   //нахожу div с количеством лайков (card__likes-count)
-//   const cardLikesCount = card.querySelector('.card__likes-count');
-//   //нахожу кнопку корзины
-//   const cardTrash = card.querySelector('.card__trash')
-//   //нахожу иконку лайка
-//   const cardIcon = card.querySelector('.card__icon')
-//   //показываю количество лайков
-//   cardLikesCount.textContent = data.likes.length
-//   //проверяю есть ли лайк пользователя на карточке
-//   const likeActive = data.likes.some((item) => {
-//     return item._id = userId
-//   })
-//   //если есть делаю лайк активным
-//   if (likeActive) {
-//     cardIcon.classList.add('card__icon_active');
-//   }
-//   //присваиваю название карточке
-//   card.querySelector('.card__description').textContent = String(titleValue);
-//   //вставляю картинку в  карточку
-//   cardPicture.style.backgroundImage = `url(${String(linkValue)})`;
-//   //вешаю событие на кнопку лайка
-//   card.querySelector('.card__icon').addEventListener('click', function (evt) {
-//     //проверяю есть ли класс card__icon_active в элементе
-//     if (evt.target.classList.contains('card__icon_active')) {
-//       //если есть удаляю  лайк
-//       deleteLike(data._id)
-//         .then((res) => {
-//           cardLikesCount.textContent = res.likes.length
-//           //и стираю сердечко
-//           evt.target.classList.remove('card__icon_active');
-//         })
-//         .catch((err) => {
-//           console.log(err); // выводим ошибку в консоль
-//         });
-//     } else {
-//       //если класса card__icon_active нет в элементе
-//       //ставлю лайк
-//       setLike(data._id)
-//         .then((res) => {
-//           cardLikesCount.textContent = res.likes.length
-//           //и закрашиваю сердечко
-//           evt.target.classList.add('card__icon_active');
-//         })
-//         .catch((err) => {
-//           console.log(err); // выводим ошибку в консоль
-//         });
-//     }
-
-//     // //добавляю класс card__icon_active если его нет и удаляю  если он есть
-//     // evt.target.classList.toggle('card__icon_active');
-//   });
-//   //вешаем событие на  картинку(открытие popup)
-//   cardPicture.addEventListener('click', function () {
-//     //вставляю картинку в попап с всплывающей картинкой
-//     popupPictureImg.style.backgroundImage = `url(${String(linkValue)})`;
-//     //вставляю описание к картинке в попап с всплывающей картинкой
-//     popupPictureCaption.textContent = String(titleValue);
-//     openPopup(popupPicture)
-//   });
-
-//   //если карточка моя
-//   if (userId === data.owner._id) {
-//     // вешаю событие на корзину
-//     cardTrash.addEventListener('click', function () {
-//       openPopup(popupDelete)
-//       //активирую кнопку
-//       activeButton(popupButtonDelete, object)
-//       //записываю  саму карточку которую хочу удалить
-//       cardDelete = card
-//       //записываю id карточки которую хочу удалить
-//       cardDelete.id = data._id
-//     });
-//   } else {
-//     //удаляю кнопку корзины
-//     cardTrash.remove('.card__trash')
-//   }
-//   return card
-// }
-
-// //функция добавления карточек
-// function addСard(titleValue, linkValue, data) {
-//   //вызываю функцию создания карточек
-//   const element = createCard(titleValue, linkValue, data);
-//   //добавляю новую карточку в DOM
-//   cards.prepend(element);
-// }
-
-// export { addСard }
-
-
-
-
-
-
-// //массив готовых карточек
-// const initialCards = [
-//   {
-//     name: 'Архыз',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-//   },
-//   {
-//     name: 'Челябинская область',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-//   },
-//   {
-//     name: 'Иваново',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-//   },
-//   {
-//     name: 'Камчатка',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-//   },
-//   {
-//     name: 'Холмогорский район',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-//   },
-//   {
-//     name: 'Байкал',
-//     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-//   }
-// ];
-
-// //добавляю в template шесть карточек из массива initialCards
-// initialCards.forEach((item) => addcard(item.name, item.link))
