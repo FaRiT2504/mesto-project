@@ -15,7 +15,3 @@
 - Адаптивная верстка
 
 #Адрес: https://farit2504.github.io/mesto-project/
-
-В проекте принимали участие:
-
-son1ss: fomin.ea2003@yandex.ru
