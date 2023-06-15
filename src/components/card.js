@@ -12,7 +12,7 @@ export default class Card {
     this.deleteCard = deleteCard;
     this.popupPicture = popupPicture;
     this.popupDelete = popupDelete;
-    this.getUserInfo = getUserInfo
+    this.getUserInfo = getUserInfo;
   }
 
   //метод возвращает шаблон карточки
@@ -27,20 +27,21 @@ export default class Card {
   //метод генерирует готовую карточку(наполняет содержимым)
   generate() {
     this._element = this._getElement();
+    this.cardLikesCount = this._element.querySelector('.card__likes-count')
+    this._image = this._element.querySelector('.card__img')
+    this.cardIcon = this._element.querySelector('.card__icon')
     this._setEventListeners();
     //вставляю картинку в  карточку
-    this._element.querySelector('.card__img').style.backgroundImage = `url(${String(this.linkValue)})`;
+    this._image.style.backgroundImage = `url(${String(this.linkValue)})`;
     //показываю количество лайков
-    this._element.querySelector('.card__likes-count').textContent = this.likes.length;
+    this.cardLikesCount.textContent = this.likes.length;
     //присваиваю название карточке
     this._element.querySelector('.card__description').textContent = String(this.titleValue);
-    //нахожу иконку лайка
-    const cardIcon = this._element.querySelector('.card__icon')
     //проверяю есть ли лайк пользователя на карточке
     const likeActive = this.likes.map(user => user._id).some((item) => item === this.getUserInfo().userId)
     //если есть делаю лайк активным
     if (likeActive) {
-      cardIcon.classList.add('card__icon_active');
+      this.cardIcon.classList.add('card__icon_active');
     }
 
     return this._element;
@@ -51,15 +52,14 @@ export default class Card {
   _setEventListeners() {
     //нахожу кнопку корзины
     const cardTrash = this._element.querySelector('.card__trash')
-    const cardLikesCount = this._element.querySelector('.card__likes-count')
     //вешаю событие на кнопку лайка
-    this._element.querySelector('.card__icon').addEventListener('click', (evt) => {
+    this.cardIcon.addEventListener('click', (evt) => {
       //проверяю есть ли класс card__icon_active в элементе
       if (evt.target.classList.contains('card__icon_active')) {
         //если есть удаляю  лайк
         this.deleteLike(this._id)
           .then((res) => {
-            cardLikesCount.textContent = res.likes.length
+            this.cardLikesCount.textContent = res.likes.length
             //и стираю сердечко
             evt.target.classList.remove('card__icon_active');
           })
@@ -71,7 +71,7 @@ export default class Card {
         //ставлю лайк
         this.setLike(this._id)
           .then((res) => {
-            cardLikesCount.textContent = res.likes.length
+            this.cardLikesCount.textContent = res.likes.length
             //и закрашиваю сердечко
             evt.target.classList.add('card__icon_active');
           })
@@ -85,7 +85,7 @@ export default class Card {
     });
 
     //вешаем событие на  картинку(открытие popup)
-    this._element.querySelector('.card__img').addEventListener('click', () => {
+    this._image.addEventListener('click', () => {
       this.popupPicture.open(this.linkValue, this.titleValue)
     });
 
