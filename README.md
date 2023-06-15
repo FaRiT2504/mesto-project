@@ -13,5 +13,6 @@
 - Псевдоклассы CSS
 - Анимации и транформации CSS
 - Адаптивная верстка
-#Почта: faritplus@mail.ru
+#Почта 1: faritplus@mail.ru,
+#Почта 2: fomin.ea2003@yandex.ru
 #Адрес: https://farit2504.github.io/mesto-project/

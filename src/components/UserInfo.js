@@ -1,4 +1,4 @@
-export class UserInfo {
+export default class UserInfo {
   constructor({ nameSelector, jobSelector, avatarSelector }, getProfileInfo, setProfileInfo, setAvatar) {
     this.profileName = document.querySelector(nameSelector);
     this.profileJob = document.querySelector(jobSelector);
@@ -10,7 +10,7 @@ export class UserInfo {
       this.profileJob.textContent = user.about;
       this.profileAvatar.style.backgroundImage = `url(${user.avatar})`;
       this.profileName.dataset.userId = user._id
-    })
+    }).catch(err => console.log(err))
   }
   getUserInfo = () => {
     return {

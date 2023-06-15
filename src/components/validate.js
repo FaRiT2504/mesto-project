@@ -1,13 +1,6 @@
-const object = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  errorClass: 'popup__error_visible',
-}
-
 export default class FormValidator {
-  constructor(classes) {
-    this._formSelector = classes.formSelector;
+  constructor(classes, form) {
+    this._form = form;
     this._inputSelector = classes.inputSelector;
     this._submitButtonSelector = classes.submitButtonSelector;
     this._inputErrorClass = classes.inputErrorClass;
@@ -59,10 +52,6 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    const forms = Array.from(document.querySelectorAll(this._formSelector))
-
-    forms.forEach(form => {
-      this._setEventListeners(form)
-    });
+    this._setEventListeners(this._form)
   }
 }

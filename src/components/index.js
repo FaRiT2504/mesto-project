@@ -1,9 +1,11 @@
 import '../pages/index.css'
 import Api from './api';
-import { UserInfo } from "./UserInfo";
+import UserInfo from "./UserInfo";
 import FormValidator from "./validate";
-import { PopupWithForm, PopupWithImage } from "./modal";
-import { addButton, avatarButton, editButton } from './utils';
+import PopupWithForm from './PopupWithForm';
+import PopupWithConfirm from './PopupWithConfirm';
+import PopupWithImage from './PopupWithImage';
+import { addButton, avatarButton, editButton, formClasses } from './utils';
 import Section from './section';
 import Card from './card';
 
@@ -21,24 +23,19 @@ const userInfo = new UserInfo({
   avatarSelector: '.profile__avatar'
 }, api.getProfileInfo, api.setProfileInfo, api.setAvatar)
 
-const validator = new FormValidator({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  errorClass: 'popup__error_visible',
-})
-
 const picturePopup = new PopupWithImage('#popup-picture')
-const deletePopup = new PopupWithForm('#popup-delete', (inputValues, card) => api.deleteCardServer(inputValues).then(() => {
+const deletePopup = new PopupWithConfirm('#popup-delete', (id, card) => api.deleteCardServer(id).then(() => {
   card.remove()
 }))
 
+const createCard = (item) => {
+    const card = new Card(item, api.setLike, api.deleteLike, api.deleteCardServer, '#card-template', picturePopup, deletePopup, userInfo.getUserInfo)
+    return card.generate()
+}
+
 const section = new Section({
   items: api.getInitialCards().then(items => {
-    return items.map(item => {
-      const card = new Card(item, api.setLike, api.deleteLike, api.deleteCardServer, '#card-template', picturePopup, deletePopup, userInfo.getUserInfo)
-      return card.generate()
-    })
+    return items.map(createCard)
   }),
   renderer: (item => {
     document.querySelector('.cards').prepend(item)
@@ -46,19 +43,25 @@ const section = new Section({
 })
 
 const avatarForm = new PopupWithForm('#popup-avatar', userInfo.setUserAvatar)
+const avatarFormValidator = new FormValidator(formClasses, avatarForm.form)
+avatarFormValidator.enableValidation()
 const editForm = new PopupWithForm('#popup-edit', userInfo.setUserInfo)
+const editFormValidator = new FormValidator(formClasses, editForm.form)
+editFormValidator.enableValidation()
 const addForm = new PopupWithForm('#popup-add', pictureData => {
-  return api.addNewCardServer(pictureData.title, pictureData.url).then(picture => {
-    const card = new Card(picture, api.setLike, api.deleteLike, api.deleteCardServer, '#card-template', picturePopup, deletePopup, userInfo.getUserInfo)
-    console.log(card.generate())
-    section.addItem(card.generate())
-  })
+  return api.addNewCardServer(pictureData.title, pictureData.url).then((res) => section.addItem(createCard(res)))
 })
+const addFormValidator = new FormValidator(formClasses, addForm.form)
+addFormValidator.enableValidation()
 
-editButton.addEventListener('click', () => editForm.open.call(editForm, userInfo.getUserInfo()))
+editButton.addEventListener('click', () => {
+  editForm.setInputValues(Object.values(userInfo.getUserInfo()))
+  editForm.open.call(editForm)
+
+})
 addButton.addEventListener('click', addForm.open.bind(addForm))
 avatarButton.addEventListener('click', avatarForm.open.bind(avatarForm))
 
-validator.enableValidation()
+// validator.enableValidation()
 section.renderItems()
 

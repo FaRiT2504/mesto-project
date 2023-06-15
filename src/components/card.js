@@ -1,8 +1,3 @@
-//нахожу кнопку удаления карточки .popup__button_delete
-export const popupButtonDelete = document.querySelector('.popup__button_delete');
-//при открытии попапа записываю сюда карточку которую хочу удалить и её id
-export let cardDelete = null
-
 //класс создания карточек
 export default class Card {
   constructor(data, setLike, deleteLike, deleteCard, selector, popupPicture, popupDelete, getUserInfo) {
@@ -98,7 +93,7 @@ export default class Card {
     if (this.getUserInfo().userId === this.ownerId) {
       // вешаю событие на корзину
       cardTrash.addEventListener('click', (e) => {
-        this.popupDelete.open({pictureId: this._id, e})
+        this.popupDelete.open(this._id, e.target.closest('.card'))
       });
     } else {
       //удаляю кнопку корзины
