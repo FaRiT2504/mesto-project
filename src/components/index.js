@@ -21,7 +21,7 @@ const userInfo = new UserInfo({
   nameSelector: '.profile__name',
   jobSelector: '.profile__job',
   avatarSelector: '.profile__avatar'
-}, api.getProfileInfo, api.setProfileInfo, api.setAvatar)
+}, api.setProfileInfo, api.setAvatar)
 
 const picturePopup = new PopupWithImage('#popup-picture')
 const deletePopup = new PopupWithConfirm('#popup-delete', (id, card) => api.deleteCardServer(id).then(() => {
@@ -34,12 +34,10 @@ const createCard = (item) => {
 }
 
 const section = new Section({
-  items: api.getInitialCards().then(items => {
-    return items.map(createCard)
+  renderer: ((item, container) => {
+    container.prepend(item)
   }),
-  renderer: (item => {
-    document.querySelector('.cards').prepend(item)
-  })
+  selector: '.cards'
 })
 
 const avatarForm = new PopupWithForm('#popup-avatar', userInfo.setUserAvatar)
@@ -57,11 +55,16 @@ addFormValidator.enableValidation()
 editButton.addEventListener('click', () => {
   editForm.setInputValues(Object.values(userInfo.getUserInfo()))
   editForm.open.call(editForm)
-
 })
 addButton.addEventListener('click', addForm.open.bind(addForm))
 avatarButton.addEventListener('click', avatarForm.open.bind(avatarForm))
 
-// validator.enableValidation()
-section.renderItems()
+userInfo.setUserInfo({name: 'asda', about: 'asdasd'})
 
+Promise.all([api.getProfileInfo(), api.getInitialCards()]).then(([user, cards]) => {
+  userInfo.setUserInfo(user)
+  userInfo.setUserAvatar({url: user.avatar})
+
+  const cardElements = cards.map(createCard)
+  section.renderItems(cardElements)
+})

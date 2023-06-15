@@ -1,18 +1,13 @@
 export default class UserInfo {
-  constructor({ nameSelector, jobSelector, avatarSelector }, getProfileInfo, setProfileInfo, setAvatar) {
+  constructor({ nameSelector, jobSelector, avatarSelector }, setProfileInfo, setAvatar) {
     this.profileName = document.querySelector(nameSelector);
     this.profileJob = document.querySelector(jobSelector);
     this.profileAvatar = document.querySelector(avatarSelector);
     this._setProfileInfo = setProfileInfo;
     this._setAvatar = setAvatar;
-    getProfileInfo().then(user => {
-      this.profileName.textContent = user.name;
-      this.profileJob.textContent = user.about;
-      this.profileAvatar.style.backgroundImage = `url(${user.avatar})`;
-      this.profileName.dataset.userId = user._id
-    }).catch(err => console.log(err))
+    this.getUserInfo = this.getUserInfo.bind(this)
   }
-  getUserInfo = () => {
+  getUserInfo() {
     return {
       name: this.profileName.textContent,
       about: this.profileJob.textContent,
@@ -22,6 +17,7 @@ export default class UserInfo {
   setUserInfo = ({ name, about }) => this._setProfileInfo(name, about).then(user => {
     this.profileName.textContent = user.name;
     this.profileJob.textContent = user.about;
+    this.profileName.dataset.userId = user._id
   })
 
 

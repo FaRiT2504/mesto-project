@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this.form = this._element.querySelector('.popup__form')
     this._submitButton = this.form.querySelector('.popup__button')
     this._submitForm = this._submitForm.bind(this)
+    this._inputList = this.form.querySelectorAll('input')
   }
 
   open() {
@@ -24,7 +25,7 @@ export default class PopupWithForm extends Popup {
   }
 
   setInputValues(values) {
-    this.form.querySelectorAll('input').forEach((input, index) => {
+    this._inputList.forEach((input, index) => {
       input.value = values[index]
     })
   }
