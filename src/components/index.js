@@ -1,137 +1,70 @@
-import { object, enableValidation, disableButton } from "./validate.js"
-import { popupCard, popupProfile, popupName, profileName, popupJob, profileJob, updateProfileInfo, popupAvatar, popupButtonCard, popupButtonProfile, popupButtonAvatar, profileForm, cardForm, cardDeleteForm, avatarForm, handlerCardFormAvatar, handlerProfileFormSubmit, handlerCardFormSubmit, handlerCardFormDelete } from "./modal.js"
-import { openPopup, closePopup } from "./utils.js"
-import { getProfileInfo, getInitialCards } from "./api.js"
-import { popupButtonDelete, addСard } from "./card.js"
-import './../pages/index.css'
-// Нахожу кнопку редактировать в DOM
-const profileButton = document.querySelector('.profile__button_type_edit');
-// Нахожу кнопку добавить новое место в DOM
-const cardButton = document.querySelector('.profile__button_type_add');
-//нахожу все попапы в DOM
-const popups = document.querySelectorAll('.popup');
-//нахожу аватар на в DOM
-const avatar = document.querySelector('.profile__avatar');
-//получаю данные пользователя
-export let userId = null
+import '../pages/index.css'
+import Api from './api';
+import UserInfo from "./UserInfo";
+import FormValidator from "./validate";
+import PopupWithForm from './PopupWithForm';
+import PopupWithConfirm from './PopupWithConfirm';
+import PopupWithImage from './PopupWithImage';
+import { addButton, avatarButton, editButton, formClasses } from './utils';
+import Section from './section';
+import Card from './card';
 
-
-// //находим все крестики в проекте по универсальному селектору
-// const closeButtons = document.querySelectorAll('.popup__close')
-
-//Присваиваю кнопкам значение
-popupButtonCard.textContent = "Создать"
-popupButtonProfile.textContent = "Сохранение"
-popupButtonAvatar.textContent = "Сохранение"
-popupButtonDelete.textContent = "Да"
-
-// Прикрепляю обработчик к формам:
-profileForm.addEventListener('submit', handlerProfileFormSubmit);
-cardForm.addEventListener('submit', handlerCardFormSubmit);
-cardDeleteForm.addEventListener('submit', handlerCardFormDelete);
-avatarForm.addEventListener('submit', handlerCardFormAvatar);
-
-//вешаем событие на кнопку редактировать(открытие popup)
-profileButton.addEventListener('click', () => {
-  //присваиваем значениям формы «Имя» и «О себе» значения
-  //которые отображаются на странице
-  popupName.value = profileName.textContent;
-  popupJob.value = profileJob.textContent;
-  //вызываю функцию открытия попапа
-  openPopup(popupProfile)
-});
-
-//вешаю событие на крестик и на оверлей
-popups.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_opened')) {
-      closePopup(popup)
-    }
-    if (evt.target.classList.contains('popup__close')) {
-      closePopup(popup)
-    }
-  })
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-22',
+  headers: {
+    authorization: 'da373be5-de2f-43e0-943d-28642416cb3a',
+    'Content-Type': 'application/json'
+  }
 })
 
-//вешаем событие на кнопку добавить новое место(открытие popup)
-cardButton.addEventListener('click', () => openPopup(popupCard));
+const userInfo = new UserInfo({
+  nameSelector: '.profile__name',
+  jobSelector: '.profile__job',
+  avatarSelector: '.profile__avatar'
+}, api.setProfileInfo, api.setAvatar)
 
-//вешаем событие на картинку аватара
-avatar.addEventListener('click', () => openPopup(popupAvatar));
+const picturePopup = new PopupWithImage('#popup-picture')
+const deletePopup = new PopupWithConfirm('#popup-delete', (id, card) => api.deleteCardServer(id).then(() => {
+  card.remove()
+}))
 
-//функция валидации
-enableValidation(object);
+const createCard = (item) => {
+    const card = new Card(item, api.setLike, api.deleteLike, api.deleteCardServer, '#card-template', picturePopup, deletePopup, userInfo.getUserInfo)
+    return card.generate()
+}
 
-Promise.all([getProfileInfo(), getInitialCards()])
-  .then(([userData, cards]) => {
-    //установка данных пользователя
-    updateProfileInfo(userData)
-    userId = userData.id
-    //отрисовка карточек
-    cards.forEach((item) => addСard(item.name, item.link, item))
-  })
-  .catch(err => {
-    console.log(err); // выводим ошибку в консоль
-  });
+const section = new Section({
+  renderer: ((item, container) => {
+    container.prepend(item)
+  }),
+  selector: '.cards'
+})
 
+const avatarForm = new PopupWithForm('#popup-avatar', userInfo.setUserAvatar)
+const avatarFormValidator = new FormValidator(formClasses, avatarForm.form)
+avatarFormValidator.enableValidation()
+const editForm = new PopupWithForm('#popup-edit', userInfo.setUserInfo)
+const editFormValidator = new FormValidator(formClasses, editForm.form)
+editFormValidator.enableValidation()
+const addForm = new PopupWithForm('#popup-add', pictureData => {
+  return api.addNewCardServer(pictureData.title, pictureData.url).then((res) => section.addItem(createCard(res)))
+})
+const addFormValidator = new FormValidator(formClasses, addForm.form)
+addFormValidator.enableValidation()
 
+editButton.addEventListener('click', () => {
+  editForm.setInputValues(Object.values(userInfo.getUserInfo()))
+  editForm.open.call(editForm)
+})
+addButton.addEventListener('click', addForm.open.bind(addForm))
+avatarButton.addEventListener('click', avatarForm.open.bind(avatarForm))
 
-// //обновляю информацию о пользователе с сервера  и получаю id
-// export let userId = getProfileInfo().then(function (res) {
-//   updateProfileInfo(res)
-//   return userId = res._id;
-// })
-//   .catch((err) => {
-//     console.log(err); // выводим ошибку в консоль
-//   });
+userInfo.setUserInfo({name: 'asda', about: 'asdasd'})
 
-// //получаю карточки c сервера
-// getInitialCards()
-//   .then((res) => {
-//     res.forEach((item) => addСard(item.name, item.link, item))
-//   })
-//   .catch((err) => {
-//     console.log(err); // выводим ошибку в консоль
-//   });
+Promise.all([api.getProfileInfo(), api.getInitialCards()]).then(([user, cards]) => {
+  userInfo.setUserInfo(user)
+  userInfo.setUserAvatar({url: user.avatar})
 
-
-
-
-
-
-// (async function main() {
-//   let temp = await getProfileInfo().then(function (res) {
-//     updateProfileInfo(res)
-//     return res._id
-//   });
-//   console.log(temp);
-// })()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  const cardElements = cards.map(createCard)
+  section.renderItems(cardElements)
+})
